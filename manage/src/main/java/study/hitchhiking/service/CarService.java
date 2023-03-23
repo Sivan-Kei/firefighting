@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  *  服务类
  * </p>
  *
- * @author test
+ * @author 吴建豪
  * @since 2023-03-23
  */
 public interface CarService extends IService<Car> {

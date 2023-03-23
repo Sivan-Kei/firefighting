@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.Version;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import lombok.Data;
@@ -15,7 +16,7 @@ import lombok.experimental.Accessors;
  * 
  * </p>
  *
- * @author test
+ * @author 吴建豪
  * @since 2023-03-23
  */
 @Data
@@ -59,6 +60,7 @@ public class User implements Serializable {
     /**
      * 创建时间
      */
+    @TableField(fill = FieldFill.INSERT)
     private Date createtime;
 
     /**

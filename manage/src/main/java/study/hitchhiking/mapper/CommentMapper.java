@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  *  Mapper 接口
  * </p>
  *
- * @author test
+ * @author 吴建豪
  * @since 2023-03-23
  */
 public interface CommentMapper extends BaseMapper<Comment> {
