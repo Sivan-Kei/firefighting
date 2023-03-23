@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="study.hitchhiking.mapper.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="study.hitchhiking.pojo.User">
+        <id column="userID" property="userID" />
+        <result column="password" property="password" />
+        <result column="name" property="name" />
+        <result column="sex" property="sex" />
+        <result column="phonenumber" property="phonenumber" />
+        <result column="identification" property="identification" />
+        <result column="createtime" property="createtime" />
+        <result column="carID" property="carID" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        userID, password, name, sex, phonenumber, identification, createtime, carID
+    </sql>
+
+</mapper>
