@@ -27,7 +27,6 @@ public class UserController {
     @ResponseBody
     @RequestMapping("/all")
     public List<User> get(){
-
         return  userService.list(null);
     }
 

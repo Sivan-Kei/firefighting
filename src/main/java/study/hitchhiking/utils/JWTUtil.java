@@ -21,6 +21,10 @@ public class JWTUtil {
 
     public static String getUIDByToken(String token){
         DecodedJWT jwt = JWT.decode(token);
-        return jwt.getClaim("userID").asString();
+        if(jwt.getExpiresAt().compareTo(new Date(System.currentTimeMillis()))>0) {
+            return null;
+        } else {
+            return jwt.getClaim("userID").asString();
+        }
     }
 }
