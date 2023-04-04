@@ -16,7 +16,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author 吴建豪
- * @since 2023-03-24
+ * @since 2023-04-04
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -25,31 +25,19 @@ public class Comment implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 评论ID
-     */
     @TableId(value = "commentID", type = IdType.AUTO)
     private Long commentID;
 
-    /**
-     * 用户ID
-     */
+    @TableField("orderID")
+    private Long orderID;
+
     @TableField("userID")
     private Long userID;
 
-    /**
-     * 司乘身份
-     */
     private String role;
 
-    /**
-     * 评论内容
-     */
     private String content;
 
-    /**
-     * 评论时间
-     */
     private Date commenttime;
 
 

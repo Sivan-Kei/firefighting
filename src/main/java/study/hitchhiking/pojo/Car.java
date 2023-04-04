@@ -16,7 +16,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author 吴建豪
- * @since 2023-03-24
+ * @since 2023-04-04
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -25,36 +25,18 @@ public class Car implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 汽车ID
-     */
     @TableId(value = "carID", type = IdType.AUTO)
     private String carID;
 
-    /**
-     * 用户ID
-     */
     @TableField("userID")
     private Long userID;
 
-    /**
-     * 座位数
-     */
     private Integer seatnumber;
 
-    /**
-     * 车牌号
-     */
     private String platenumber;
 
-    /**
-     * 百公里油耗
-     */
     private BigDecimal fuelconsumption;
 
-    /**
-     * 汽油型号
-     */
     private String oiltype;
 
 

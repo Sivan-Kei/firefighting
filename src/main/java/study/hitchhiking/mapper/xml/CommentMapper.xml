@@ -5,6 +5,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="study.hitchhiking.pojo.Comment">
         <id column="commentID" property="commentID" />
+        <result column="orderID" property="orderID" />
         <result column="userID" property="userID" />
         <result column="role" property="role" />
         <result column="content" property="content" />
@@ -13,7 +14,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        commentID, userID, role, content, commenttime
+        commentID, orderID, userID, role, content, commenttime
     </sql>
 
 </mapper>

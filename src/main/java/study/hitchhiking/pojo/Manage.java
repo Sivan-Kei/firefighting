@@ -16,7 +16,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author 吴建豪
- * @since 2023-03-24
+ * @since 2023-04-04
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -25,37 +25,19 @@ public class Manage implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 用户ID
-     */
     @TableField("userID")
     private Long userID;
 
-    /**
-     * 订单ID
-     */
     @TableField("orderID")
     private Long orderID;
 
-    /**
-     * 创始人ID
-     */
     @TableField("initiatorID")
     private Long initiatorID;
 
-    /**
-     * 当前价格
-     */
     private BigDecimal currentprice;
 
-    /**
-     * 请求议价
-     */
     private BigDecimal requestedprice;
 
-    /**
-     * 司乘身份
-     */
     private String role;
 
 
