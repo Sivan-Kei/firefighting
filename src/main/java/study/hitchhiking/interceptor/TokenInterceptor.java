@@ -3,6 +3,7 @@ package study.hitchhiking.interceptor;
 
 import java.io.PrintWriter;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -36,8 +37,18 @@ public class TokenInterceptor implements HandlerInterceptor{
     //拦截每个请求
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
                              Object handler) throws Exception {
+        if("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            return true;
+        }
+
         response.setCharacterEncoding("utf-8");
-        String token = request.getHeader("token");
+        String token = null;
+        Cookie[] cookies = request.getCookies();
+        for (int i = 0; i < cookies.length; i++) {
+            if("token".equals(cookies[i].getName())){
+                token = cookies[i].getValue();
+            }
+        }
         System.out.println("preHandle....." + token);
         ResponseData responseData;
 
@@ -45,8 +56,8 @@ public class TokenInterceptor implements HandlerInterceptor{
         if(null != token) {
             String userID = JWTUtil.getUIDByToken(token);//解码
             if(null != userID){
-                responseData = ResponseData.succee();
-                responseMessage(response, response.getWriter(), responseData);
+                responseData = ResponseData.success();
+                //responseMessage(response, response.getWriter(), responseData);
                 return true;
             }
         }

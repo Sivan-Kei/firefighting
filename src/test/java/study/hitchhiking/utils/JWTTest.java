@@ -23,4 +23,10 @@ public class JWTTest {
         String unSignTarget = JWTUtil.getUIDByToken(token);
         Assertions.assertEquals(testTarget,unSignTarget);
     }
+
+    @Test
+    public void test(){
+        String unSignTarget = JWTUtil.getUIDByToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODA2MDI2NDEsInVzZXJJRCI6IjEifQ.L9swvHSv7l633GdwvaAUya75bwiekhZVkuIrwbYjoYw");
+        System.out.println(unSignTarget);
+    }
 }

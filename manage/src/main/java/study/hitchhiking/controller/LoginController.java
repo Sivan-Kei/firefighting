@@ -1,5 +1,6 @@
 package study.hitchhiking.controller;
 
+import com.alibaba.fastjson.serializer.JSONLibDataFormatSerializer;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,30 +12,28 @@ import study.hitchhiking.service.UserService;
 import study.hitchhiking.utils.JWTUtil;
 import study.hitchhiking.utils.response.ResponseData;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/login")
-public class Login {
+public class LoginController {
     @Autowired
     private UserService userService;
 
     @ResponseBody
     @RequestMapping("/user")
-    public ResponseData userLogin(@RequestParam(value = "phonenumber",required = true) String phonenumber,
-                                   @RequestParam(value = "password",required = true) String password){
+    public ResponseData userLogin(@RequestParam(value = "phonenumber", required = true) String phonenumber,
+                                  @RequestParam(value = "password", required = true) String password) {
 
-        QueryWrapper<User> wrapper=new QueryWrapper<>(); 
-        wrapper.like("phonenumber",phonenumber).last("LiMIT 1");
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.like("phonenumber", phonenumber).last("LiMIT 1");
         User user = userService.getOne(wrapper);
         System.out.println(user.getPassword());
         String userToken;
         ResponseData responseData = new ResponseData();
-        if(null != user && null != user.getPassword() && user.getPassword().equals(password)){
+        if (null != user && null != user.getPassword() && user.getPassword().equals(password)) {
             userToken = JWTUtil.signWithUID(user.getUserID().toString());
-            responseData.put("token",userToken);
+            responseData.put("token", userToken);
+            System.out.println(phonenumber + " login");
         }
-
         return responseData;
     }
 }

@@ -13,6 +13,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         //设置拦截路径，排除路径，优先级等
         registry.addInterceptor(new TokenInterceptor())
                 .excludePathPatterns("/login/**").order(11)
+                .excludePathPatterns("/login.html").order(12)
                 .addPathPatterns("/user/**");
 
     }

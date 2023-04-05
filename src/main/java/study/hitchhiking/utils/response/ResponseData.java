@@ -32,19 +32,19 @@ public class ResponseData extends HashMap<String, Object> {
         put("msg", "success");
     }
 
-    public static ResponseData succee() {
+    public static ResponseData success() {
 
         return new ResponseData();
     }
 
-    public static ResponseData succee(final Map<String, Object> map) {
+    public static ResponseData success(final Map<String, Object> map) {
         ResponseData responseData = new ResponseData();
 
         responseData.putAll(map);
         return responseData;
     }
 
-    public static ResponseData succee(final String msg) {
+    public static ResponseData success(final String msg) {
         ResponseData responseData = new ResponseData();
 
         responseData.put("msg", msg);
