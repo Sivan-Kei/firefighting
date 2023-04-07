@@ -63,7 +63,8 @@ public class TokenInterceptor implements HandlerInterceptor{
         }
 
         responseData = ResponseData.failed("无有效登录信息，请重新登录。");
-        responseMessage(response, response.getWriter(), responseData);
+        //responseMessage(response, response.getWriter(), responseData);
+        response.sendRedirect("/login.html");
         return false;
     }
 

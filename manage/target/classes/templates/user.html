@@ -1,7 +1,71 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ch" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
+    <title>userDetails</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 </head>
 <body>
+    <table>
+        <tr>
+            <td>姓名：</td>
+            <td><span th:text=${one.name}></span></td>
+        </tr>
+        <tr>
+            <td>性别：</td>
+            <td><span th:text=${one.sex}></span></td>
+        </tr>
+        <tr>
+            <td>电话：</td>
+            <td><span th:text=${one.phonenumber}></span></td>
+        </tr>
+        <tr>
+            <td>密码：</td>
+            <td><span th:text=${one.password}></span></td>
+        </tr>
+        <tr>
+            <td>身份证号：</td>
+            <td><span th:text=${one.identification}></span></td>
+        </tr>
+        <tr>
+            <td>创建时间：</td>
+            <td><span th:text=${one.createtime}></span></td>
+        </tr>
+        <tr>
+            <td>持有车数量：</td>
+            <td><span th:text=${one.getCarNumber()}></span></td>
+        </tr>
+    </table>
+    <form th:action=@{/user/details}>
+        <input type="text" name="userID" th:value=${one.userID} hidden>
+        <input type="text" name="change" value="change" hidden>
+        <input type="submit" value="修改用户信息">
+    </form>
+    <table border="1">
+        <tr>
+            <td>车辆ID</td>
+            <td>车座数</td>
+            <td>车牌号</td>
+            <td>百公里耗油</td>
+            <td>汽油型号</td>
+            <td>修改信息</td>
+        </tr>
+        <tr th:each="car:${cars}">
+            <td th:text=${car.carID}></td>
+            <td th:text=${car.seatnumber}></td>
+            <td th:text=${car.platenumber}></td>
+            <td th:text=${car.fuelconsumption}></td>
+            <td th:text=${car.oiltype}></td>
+            <td>
+                <form th:action=@{/car/update}>
+                    <input type="text" name="carID" th:value=${car.carID} hidden>
+                    <input type="submit" value="修改信息">
+                </form>
+            </td>
+        </tr>
+    </table>
+
+
 </body>
 </html>

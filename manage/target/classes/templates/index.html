@@ -27,9 +27,13 @@
 <!--展示用户-->
     <table>
         <tr th:each="userObj:${userList}">
-            <td th:text=${userObj.userID}>序号</td>
+            <td th:text=${userObj.userID}>用户ID</td>
             <td th:text=${userObj.name}>姓名</td>
+            <td th:text=${userObj.sex}>性别</td>
             <td th:text=${userObj.phonenumber}>电话号码</td>
+            <td th:text=${userObj.password}>密码</td>
+            <td th:text=${userObj.identification}>身份证</td>
+            <td th:text=${userObj.createtime}>创建时间</td>
         </tr>
     </table>
 </body>

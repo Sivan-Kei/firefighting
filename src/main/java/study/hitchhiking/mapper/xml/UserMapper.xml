@@ -11,12 +11,11 @@
         <result column="phonenumber" property="phonenumber" />
         <result column="identification" property="identification" />
         <result column="createtime" property="createtime" />
-        <result column="carID" property="carID" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        userID, password, name, sex, phonenumber, identification, createtime, carID
+        userID, password, name, sex, phonenumber, identification, createtime
     </sql>
 
 </mapper>

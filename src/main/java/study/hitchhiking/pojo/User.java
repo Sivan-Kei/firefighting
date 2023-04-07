@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author 吴建豪
- * @since 2023-04-04
+ * @since 2023-04-05
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -41,9 +41,6 @@ public class User implements Serializable {
 
     @TableField(fill = FieldFill.INSERT)
     private Date createtime;
-
-    @TableField("carID")
-    private String carID;
 
 
 }

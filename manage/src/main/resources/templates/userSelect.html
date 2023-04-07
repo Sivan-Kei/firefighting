@@ -7,6 +7,7 @@
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 </head>
 <body>
+<p>
     <!--查询用户-->
     <form th:action="@{/user/select}" method="post">
         <p>
@@ -24,9 +25,38 @@
             <input type="radio" name="typeOfSelect" value="identification">身份证
         </p>
     </form>
+</p>
 
 <table>
+    <tr>
+        <td>用户ID</td>
+        <td>姓名</td>
+        <td>性别</td>
+        <td>电话号码</td>
+        <td>密码</td>
+        <td>身份证</td>
+        <td>创建时间</td>
+        <td>操作</td>
+        <td>操作</td>
+    </tr>
+    <tr>
+        <form th:action=@{/user/insert} method="post">
+            <td>自动生成</td>
+            <td><input type="text" name="name" placeholder="姓名"></td>
+            <td><select name="sex">
+                <option value="男">男</option>
+                <option value="女">女</option>
+            </select></td>
+            <td><input type="text" name="phonenumber" placeholder="电话号码"></td>
+            <td><input type="text" name="password" placeholder="密码"></td>
+            <td><input type="text" name="identification" placeholder="身份证"></td>
+            <td>自动生成</td>
+            <td><input type="submit" value="添加"></td>
+            <td></td>
+        </form>
+    </tr>
     <tr th:each="userObj:${userList}">
+
         <td th:text=${userObj.userID}>用户ID</td>
         <td th:text=${userObj.name}>姓名</td>
         <td th:text=${userObj.sex}>性别</td>
@@ -34,7 +64,18 @@
         <td th:text=${userObj.password}>密码</td>
         <td th:text=${userObj.identification}>身份证</td>
         <td th:text=${userObj.createtime}>创建时间</td>
-        <td th:text=${userObj.carID}></td>
+        <td>
+            <form th:action="@{/user/details}" method="post">
+                <input type="hidden" name="userID" th:value=${userObj.userID}>
+                <input type="submit" value="详情">
+            </form>
+        </td>
+        <td>
+            <form th:action="@{/user/delete}" method="post">
+                <input type="hidden" name="userID" th:value=${userObj.userID}>
+                <input type="submit" value="删除">
+            </form>
+        </td>
     </tr>
 </table>
 </body>
