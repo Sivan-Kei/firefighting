@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ch" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>car</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script>
+        function checkNum(obj) {
+            //检查是否是非数字值
+            if (isNaN(obj.value)) {
+                obj.value = "";
+            }
+            if (obj != null) {
+                //检查小数点后是否对于两位
+                if (obj.value.toString().split(".").length > 1 && obj.value.toString().split(".")[1].length > 2) {
+                    alert("小数点后多于两位！");
+                    obj.value = "";
+                }
+            }
+        };
+    </script>
+</head>
+    <body>
+        <form th:action=@{/car/update} method="post">
+            <table>
+                <tr>
+                    <td>汽车ID：</td>
+                    <td><span th:text=${one.carID}></span>
+                        <input type="text" name="carID" th:value=${one.carID} hidden></td>
+                </tr>
+                <tr>
+                    <td>车主ID：</td>
+                    <td><span th:text=${one.userID}></span></td>
+                </tr>
+                <tr>
+                    <td>客座数：</td>
+                    <td><input type="number" name="seatnumber" th:value=${one.seatnumber}></span></td>
+                </tr>
+                <tr>
+                    <td>车牌号：</td>
+                    <td><input type="text" name="platenumber" th:value=${one.platenumber}></span></td>
+                </tr>
+                <tr>
+                    <td>百公里成本：</td>
+                    <td><input type="text" name="fuelconsumption" onkeyup=checkNum(this)
+                               th:value=${one.fuelconsumption}></span></td>
+                </tr>
+                <tr>
+                    <td>动力类型：</td>
+                    <td><input type="text" name="oiltype" th:value=${one.oiltype}></span></td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="submit" value="修改">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </body>
+</html>

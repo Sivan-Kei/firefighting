@@ -16,7 +16,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author 吴建豪
- * @since 2023-04-05
+ * @since 2023-04-10
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -26,7 +26,7 @@ public class Car implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "carID", type = IdType.AUTO)
-    private String carID;
+    private Long carID;
 
     @TableField("userID")
     private Long userID;

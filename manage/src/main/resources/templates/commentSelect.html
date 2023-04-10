@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ch" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>commentSelect</title>
+    <meta charset="UTF-8">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+</head>
+<body>
+<p>
+    <!--查询用户-->
+<form th:action="@{/comment/select}" method="post">
+    <p>
+        <input type="text" name="target" placeholder="请输入查询条件"></input>
+        <input type="checkbox" name="role" value="司机">司机
+        <input type="checkbox" name="role" value="乘客">乘客
+        <input type="submit" value="查询"></input>
+        <input type="reset" value="重置">
+    </p>
+    <p>
+        <input type="radio" name="typeOfSelect" value="commentID" checked>姓名
+        <input type="radio" name="typeOfSelect" value="userID">用户ID
+        <input type="radio" name="typeOfSelect" value="orderID">密码
+    </p>
+</form>
+</p>
+
+<table border>
+    <tr>
+        <td>评论ID</td>
+        <td>订单ID</td>
+        <td>用户ID</td>
+        <td>身份</td>
+        <td>内容</td>
+        <td>评论时间</td>
+        <td>操作</td>
+        <td>操作</td>
+    </tr>
+    <tr>
+        <form th:action=@{/comment/insert} method="post">
+            <td>自动生成</td>
+            <td><input type="text" name="orderID" placeholder="订单ID"></td>
+            <td><input type="text" name="userID" placeholder="用户ID"></td>
+            <td><select name="role">
+                <option value="司机">司机</option>
+                <option value="乘客">乘客</option>
+            </select></td>
+
+            <td><input type="text" name="content" placeholder="评论内容"></td>
+            <td><input type="datetime-local" name="commenttime" ></td>
+            <td><input type="submit" value="添加"></td>
+            <td></td>
+        </form>
+    </tr>
+    <tr th:each="commentObj:${commentList}">
+
+        <td th:text=${commentObj.commentID}>评论ID</td>
+        <td th:text=${commentObj.orderID}>订单ID</td>
+        <td th:text=${commentObj.userID}>用户ID</td>
+        <td th:text=${commentObj.role}>身份</td>
+        <td th:text=${commentObj.content}>内容</td>
+        <td th:text=${commentObj.commenttime}>评论时间</td>
+        <td>
+            <form th:action="@{/comment/details}" method="post">
+                <input type="hidden" name="commentID" th:value=${commentObj.commentID}>
+                <input type="submit" value="详情">
+            </form>
+        </td>
+        <td>
+            <form th:action="@{/comment/delete}" method="post">
+                <input type="hidden" name="commentID" th:value=${commentObj.userID}>
+                <input type="submit" value="删除">
+            </form>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

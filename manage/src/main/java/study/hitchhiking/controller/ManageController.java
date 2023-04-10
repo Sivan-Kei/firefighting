@@ -1,6 +1,7 @@
 package study.hitchhiking.controller;
 
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author 吴建豪
  * @since 2023-03-24
  */
-@RestController
+@Controller
 @RequestMapping("/manage")
 public class ManageController {
 

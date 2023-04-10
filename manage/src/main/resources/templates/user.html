@@ -47,9 +47,21 @@
             <td>车辆ID</td>
             <td>车座数</td>
             <td>车牌号</td>
-            <td>百公里耗油</td>
-            <td>汽油型号</td>
-            <td>修改信息</td>
+            <td>百公里成本</td>
+            <td>动力类型</td>
+            <td>操作</td>
+            <td>操作</td>
+        </tr>
+        <tr>
+            <form th:action=@{/car/insert} method="post">
+                <td>自动生成<input type="text" name="userID" th:value=${one.userID} hidden></td>
+                <td><input type="number" name="seatnumber" placeholder="客座数"></td>
+                <td><input type="text" name="platenumber" placeholder="车牌号"></td>
+                <td><input type="text" name="fuelconsumption" placeholder="百公里成本"></td>
+                <td><input type="text" name="oiltype" placeholder="动力类型"></td>
+                <td><input type="submit" value="添加车辆"></td>
+                <td><input type="reset" value="清除信息"></td>
+            </form>
         </tr>
         <tr th:each="car:${cars}">
             <td th:text=${car.carID}></td>
@@ -58,9 +70,15 @@
             <td th:text=${car.fuelconsumption}></td>
             <td th:text=${car.oiltype}></td>
             <td>
-                <form th:action=@{/car/update}>
+                <form th:action=@{/car/details}>
                     <input type="text" name="carID" th:value=${car.carID} hidden>
                     <input type="submit" value="修改信息">
+                </form>
+            </td>
+            <td>
+                <form th:action=@{/car/delete}>
+                    <input type="text" name="carID" th:value=${car.carID} hidden>
+                    <input type="submit" value="删除">
                 </form>
             </td>
         </tr>

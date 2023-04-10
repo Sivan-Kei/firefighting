@@ -9,8 +9,7 @@ import org.springframework.ui.Model;
 import study.hitchhiking.VO.userVO;
 import study.hitchhiking.pojo.Car;
 import study.hitchhiking.pojo.User;
-import study.hitchhiking.service.CarService;
-import study.hitchhiking.service.UserService;
+import study.hitchhiking.service.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,6 +31,15 @@ public class UserController {
 
     @Autowired
     private CarService carService;
+
+    @Autowired
+    private OrdersService ordersService;
+
+    @Autowired
+    private CommentService commentService;
+
+    @Autowired
+    private ManageService manageService;
 
     //@ResponseBody
     @RequestMapping("/all")
@@ -68,7 +76,7 @@ public class UserController {
 
         QueryWrapper<Car> wrapper = new QueryWrapper<>();
         wrapper.eq("userID", userID);
-        model.addAttribute("cars", carService.list(null));
+        model.addAttribute("cars", carService.list(wrapper));
         if ("change".equals(change)) {
             return "userUpdate";
         }
@@ -102,12 +110,16 @@ public class UserController {
 
         QueryWrapper<Car> carWrapper = new QueryWrapper<>();
         carWrapper.eq("userID", userID);
-        model.addAttribute("cars", carService.list(null));
+        model.addAttribute("cars", carService.list(carWrapper));
         return "user";
     }
 
     @RequestMapping("/delete")
     public String deleteUser(@RequestParam(name = "userID") String userID, Model model) {
+
+
+
+
         userService.removeById(Long.valueOf(userID));
         //System.out.println("userID="+userID);
         addUserVOList("userList", userService.list(null), model);

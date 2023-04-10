@@ -47,6 +47,4 @@ public class Orders implements Serializable {
     private String destination;
 
     private Date departtime;
-
-
 }
