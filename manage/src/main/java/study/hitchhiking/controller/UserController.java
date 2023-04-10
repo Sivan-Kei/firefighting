@@ -121,6 +121,10 @@ public class UserController {
                              @RequestParam(name="password") String password,
                              @RequestParam(name="identification") String identification,
                              Model model){
+        if(null == phonenumber || null == password){
+            addUserVOList("userList",userService.list(null),model);
+            return "userSelect";
+        }
         User user = new User();
         user.setName(name);
         user.setSex(sex);
