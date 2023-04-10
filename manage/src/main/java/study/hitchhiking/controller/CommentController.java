@@ -8,15 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import study.hitchhiking.VO.commentVO;
-import study.hitchhiking.VO.orderVO;
 import study.hitchhiking.pojo.Comment;
-import study.hitchhiking.pojo.Orders;
 import study.hitchhiking.service.CommentService;
 import study.hitchhiking.service.OrdersService;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,7 +35,7 @@ public class CommentController {
     private CommentService commentService;
 
     @RequestMapping("/select")
-    public String getOrders(@RequestParam(name = "target", required = false) String target,
+    public String getComment(@RequestParam(name = "target", required = false) String target,
                             @RequestParam(name = "typeOfSelect", required = false) String typeOfSelect,
                             @RequestParam(name = "role", required = false) String[] role, Model model) {
         QueryWrapper<Comment> wrapper = new QueryWrapper<>();
@@ -80,7 +76,7 @@ public class CommentController {
     @RequestMapping("/delete")
     public String deleteComment(@RequestParam(name = "commentID") String commentID, Model model) {
         commentService.removeById(Long.valueOf(commentID));
-        model.addAttribute("orderList",commentVOList(commentService.list(null)));
+        model.addAttribute("commentList",commentVOList(commentService.list(null)));
         return "commentSelect";
     }
 

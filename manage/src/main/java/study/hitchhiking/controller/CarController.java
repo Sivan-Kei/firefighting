@@ -1,17 +1,14 @@
 package study.hitchhiking.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import study.hitchhiking.VO.userVO;
 import study.hitchhiking.pojo.Car;
-import study.hitchhiking.pojo.User;
 import study.hitchhiking.service.CarService;
 import study.hitchhiking.service.UserService;
 

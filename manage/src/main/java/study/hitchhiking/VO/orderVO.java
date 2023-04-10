@@ -1,8 +1,5 @@
 package study.hitchhiking.VO;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Getter;
 import study.hitchhiking.config.CONFIG;
 import study.hitchhiking.pojo.Orders;
@@ -10,7 +7,6 @@ import study.hitchhiking.pojo.Orders;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 
 

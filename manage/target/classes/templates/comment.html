@@ -5,21 +5,6 @@
     <title>comment</title>
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-    <script>
-        function checkNum(obj) {
-            //检查是否是非数字值
-            if (isNaN(obj.value)) {
-                obj.value = "";
-            }
-            if (obj != null) {
-                //检查小数点后是否对于两位
-                if (obj.value.toString().split(".").length > 1 && obj.value.toString().split(".")[1].length > 2) {
-                    alert("小数点后多于两位！");
-                    obj.value = "";
-                }
-            }
-        };
-    </script>
 </head>
 <body>
 <form th:action=@{/comment/update} method="post">
@@ -44,8 +29,8 @@
             <td><span th:text=${one.role}></span>
                 <select name="role">
                     <option value="不修改">不修改</option>
-                    <option value="乘客">议价中</option>
-                    <option value="司机">已接单</option>
+                    <option value="乘客">乘客</option>
+                    <option value="司机">司机</option>
                 </select></td>
         </tr>
         <tr>

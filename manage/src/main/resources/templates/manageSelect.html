@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ch" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>manageSelect</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script>
+        function checkNum(obj) {
+            //检查是否是非数字值
+            if (isNaN(obj.value)) {
+                obj.value = "";
+            }
+            if (obj != null) {
+                //检查小数点后是否对于两位
+                if (obj.value.toString().split(".").length > 1 && obj.value.toString().split(".")[1].length > 2) {
+                    alert("小数点后多于两位！");
+                    obj.value = "";
+                }
+            }
+        };
+    </script>
+</head>
+<body>
+<p>
+    <!--查询用户-->
+<form th:action="@{/manage/select}" method="post">
+    <p>
+        <input type="text" name="target" placeholder="请输入查询条件">
+        <input type="checkbox" name="role" value="司机">司机
+        <input type="checkbox" name="role" value="乘客">乘客
+        <input type="submit" value="查询"></input>
+        <input type="reset" value="重置">
+    </p>
+    <p>
+        <input type="radio" name="typeOfSelect" value="userID" checked>用户ID
+        <input type="radio" name="typeOfSelect" value="orderID">订单ID
+        <input type="radio" name="typeOfSelect" value="initiatorID">创建者ID
+    </p>
+</form>
+</p>
+
+<table border>
+    <tr>
+        <td>用户ID</td>
+        <td>订单ID</td>
+        <td>创建者ID</td>
+        <td>当前价格</td>
+        <td>请求价格</td>
+        <td>身份</td>
+        <td>操作</td>
+        <td>操作</td>
+    </tr>
+    <tr>
+        <form th:action=@{/manage/insert} method="post">
+            <td><input type="text" name="userID" placeholder="用户ID"></td>
+            <td><input type="text" name="orderID" placeholder="订单ID"></td>
+            <td><input type="text" name="initiatorID" placeholder="创建者ID"></td>
+            <td><input type="text" name="currentprice" onkeyup=checkNum(this)></td>
+            <td><input type="text" name="requestedprice" onkeyup=checkNum(this)></td>
+            <td><select name="role">
+                <option value="司机">司机</option>
+                <option value="乘客">乘客</option>
+            </select></td>
+            <td><input type="submit" value="添加"></td>
+            <td></td>
+        </form>
+    </tr>
+    <tr th:each="manageObj:${manageList}">
+
+        <td th:text=${manageObj.userID}>用户ID</td>
+        <td th:text=${manageObj.orderID}>订单ID</td>
+        <td th:text=${manageObj.initiatorID}>创建者ID</td>
+        <td th:text=${manageObj.currentprice}>当前价格</td>
+        <td th:text=${manageObj.requestedprice}>请求价格</td>
+        <td th:text=${manageObj.role}>身份</td>
+        <td>
+            <form th:action="@{/manage/details}" method="post">
+                <input type="hidden" name="orderID" th:value=${manageObj.orderID}>
+                <input type="hidden" name="userID" th:value=${manageObj.userID}>
+                <input type="submit" value="详情">
+            </form>
+        </td>
+        <td>
+            <form th:action="@{/manage/delete}" method="post">
+                <input type="hidden" name="orderID" th:value=${manageObj.orderID}>
+                <input type="hidden" name="userID" th:value=${manageObj.userID}>
+                <input type="submit" value="删除">
+            </form>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

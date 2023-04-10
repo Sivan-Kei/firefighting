@@ -116,10 +116,6 @@ public class UserController {
 
     @RequestMapping("/delete")
     public String deleteUser(@RequestParam(name = "userID") String userID, Model model) {
-
-
-
-
         userService.removeById(Long.valueOf(userID));
         //System.out.println("userID="+userID);
         addUserVOList("userList", userService.list(null), model);

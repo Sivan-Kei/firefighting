@@ -1,6 +1,5 @@
 package study.hitchhiking.controller;
 
-import com.alibaba.fastjson.serializer.JSONLibDataFormatSerializer;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
