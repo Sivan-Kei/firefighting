@@ -5,6 +5,7 @@
     <title>userDetails</title>
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <link href="/css/select.css" media="all" rel="stylesheet"/>
 </head>
 <body>
     <table>
@@ -40,25 +41,25 @@
     <form th:action=@{/user/details}>
         <input type="text" name="userID" th:value=${one.userID} hidden>
         <input type="text" name="change" value="change" hidden>
-        <input type="submit" value="修改用户信息">
+        <input type="submit" value="修改用户信息" class="btn-gradient blue mini">
     </form>
-    <table border="1">
+    <table class="niceTable">
         <tr>
-            <td>车辆ID</td>
-            <td>车座数</td>
-            <td>车牌号</td>
-            <td>百公里成本</td>
-            <td>动力类型</td>
-            <td>操作</td>
-            <td>操作</td>
+            <th>车辆ID</th>
+            <th>车座数</th>
+            <th>车牌号</th>
+            <th>百公里成本</th>
+            <th>动力类型</th>
+            <th>操作</th>
+            <th>操作</th>
         </tr>
         <tr>
             <form th:action=@{/car/insert} method="post">
                 <td>自动生成<input type="text" name="userID" th:value=${one.userID} hidden></td>
-                <td><input type="number" name="seatnumber" placeholder="客座数"></td>
-                <td><input type="text" name="platenumber" placeholder="车牌号"></td>
-                <td><input type="text" name="fuelconsumption" placeholder="百公里成本"></td>
-                <td><input type="text" name="oiltype" placeholder="动力类型"></td>
+                <td><input type="number" name="seatnumber" placeholder="客座数"  required></td>
+                <td><input type="text" name="platenumber" placeholder="车牌号"  required></td>
+                <td><input type="text" name="fuelconsumption" placeholder="百公里成本"  required></td>
+                <td><input type="text" name="oiltype" placeholder="动力类型"  required></td>
                 <td><input type="submit" value="添加车辆"></td>
                 <td><input type="reset" value="清除信息"></td>
             </form>
@@ -72,18 +73,16 @@
             <td>
                 <form th:action=@{/car/details}>
                     <input type="text" name="carID" th:value=${car.carID} hidden>
-                    <input type="submit" value="修改信息">
+                    <input type="submit" value="修改信息" class="btn-gradient blue mini">
                 </form>
             </td>
             <td>
                 <form th:action=@{/car/delete}>
                     <input type="text" name="carID" th:value=${car.carID} hidden>
-                    <input type="submit" value="删除">
+                    <input type="submit" value="删除" class="btn-gradient green mini">
                 </form>
             </td>
         </tr>
     </table>
-
-
 </body>
 </html>
