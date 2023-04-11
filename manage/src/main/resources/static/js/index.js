@@ -75,7 +75,7 @@ layui.config({
 	        id: 'LAY_layuipro', //设定一个id，防止重复弹出
 	        btn: ['确定'],
 	        moveType: 1, //拖拽模式，0或者1
-	        content: '<div style="padding:15px 20px; text-align:justify; line-height: 22px; text-indent:2em;border-bottom:1px solid #e2e2e2;"><p>movee的旅游管理系统WEB平台采用layui作为前端框架架构、SpringBoot框架作为后台架构。</p></div>',
+	        content: '<div style="padding:15px 20px; text-align:justify; line-height: 22px; text-indent:2em;border-bottom:1px solid #e2e2e2;"><p>可议价顺风车平台采用layui作为前端框架架构、SpringBoot框架作为后台架构。</p></div>',
 	        success: function(layero){
 				var btn = layero.find('.layui-layer-btn');
 				btn.css('text-align', 'center');

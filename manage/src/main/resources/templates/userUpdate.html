@@ -5,14 +5,14 @@
     <title>updateUser</title>
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <link href="/css/select.css" media="all" rel="stylesheet"/>
 </head>
 <body>
 <form th:action=@{/user/update} method="post">
     <table>
-
         <tr>
             <td>姓名：</td>
-            <td><input type="text" name="name" th:value=${one.name}></td>
+            <td><input type="text" name="name" th:value=${one.name}  required></td>
         </tr>
         <tr>
             <td>性别：</td>
@@ -22,11 +22,11 @@
         </tr>
         <tr>
             <td>电话：</td>
-            <td><input type="text" name="phonenumber" th:value=${one.phonenumber}></input></td>
+            <td><input type="text" name="phonenumber" th:value=${one.phonenumber}  required></input></td>
         </tr>
         <tr>
             <td>密码：</td>
-            <td><input type="text" name="password"  th:value=${one.password}></span></td>
+            <td><input type="text" name="password"  th:value=${one.password}  required></span></td>
         </tr>
         <tr>
             <td>身份证号：</td>
@@ -35,7 +35,8 @@
         <tr>
             <td>
                 <input type="text" name="userID" th:value=${one.userID} hidden>
-                <input type="submit" value="确认">
+                <input type="submit" value="确认" class="btn-gradient orange small">
+                <input type="reset" value="清除" class="btn-gradient red small">
             </td>
         </tr>
     </table>

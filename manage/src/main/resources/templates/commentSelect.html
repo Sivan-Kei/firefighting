@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <link href="/css/select.css" media="all" rel="stylesheet"/>
 </head>
 <body>
 <p>
@@ -14,8 +15,8 @@
         <input type="text" name="target" placeholder="请输入查询条件"></input>
         <input type="checkbox" name="role" value="司机">司机
         <input type="checkbox" name="role" value="乘客">乘客
-        <input type="submit" value="查询"></input>
-        <input type="reset" value="重置">
+        <input type="submit" value="查询" class="btn-gradient blue mini"></input>
+        <input type="reset" value="重置" class="btn-gradient green mini">
     </p>
     <p>
         <input type="radio" name="typeOfSelect" value="commentID" checked>评论ID
@@ -25,16 +26,16 @@
 </form>
 </p>
 
-<table border>
+<table class="niceTable">
     <tr>
-        <td>评论ID</td>
-        <td>订单ID</td>
-        <td>用户ID</td>
-        <td>身份</td>
-        <td>内容</td>
-        <td>评论时间</td>
-        <td>操作</td>
-        <td>操作</td>
+        <th>评论ID</th>
+        <th>订单ID</th>
+        <th>用户ID</th>
+        <th>身份</th>
+        <th>内容</th>
+        <th>评论时间</th>
+        <th>操作</th>
+        <th>操作</th>
     </tr>
     <tr>
         <form th:action=@{/comment/insert} method="post">
@@ -48,8 +49,8 @@
 
             <td><input type="text" name="content" placeholder="评论内容"></td>
             <td><input type="datetime-local" name="commenttime" ></td>
-            <td><input type="submit" value="添加"></td>
-            <td></td>
+            <td><input type="submit" value="添加" class="btn-gradient blue mini"></td>
+            <td><input type="reset" value="重置" class="btn-gradient green mini"></td>
         </form>
     </tr>
     <tr th:each="commentObj:${commentList}">
@@ -63,13 +64,13 @@
         <td>
             <form th:action="@{/comment/details}" method="post">
                 <input type="hidden" name="commentID" th:value=${commentObj.commentID}>
-                <input type="submit" value="详情">
+                <input type="submit" value="详情" class="btn-gradient blue mini">
             </form>
         </td>
         <td>
             <form th:action="@{/comment/delete}" method="post">
                 <input type="hidden" name="commentID" th:value=${commentObj.userID}>
-                <input type="submit" value="删除">
+                <input type="submit" value="删除" class="btn-gradient red mini">
             </form>
         </td>
     </tr>
