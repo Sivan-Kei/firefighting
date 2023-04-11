@@ -18,7 +18,7 @@
             success: function (result) {
                 //保存token用来判断用户是否登录，和身份是否属实
                 $.cookie('token', result.token);
-                window.location.href = "/user/all";
+                window.location.href = "/index.html";
             }
         })
     }
