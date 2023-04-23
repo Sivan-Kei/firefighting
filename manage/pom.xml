@@ -21,7 +21,7 @@
             <groupId>study.hitchhiking</groupId>
             <artifactId>hitch_hiking</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
+            <scope>import</scope>
         </dependency>
     </dependencies>
 

@@ -23,7 +23,7 @@ public class LoginController {
     public ResponseData userLogin(@RequestParam(value = "phonenumber", required = true) String phonenumber,
                                   @RequestParam(value = "password", required = true) String password) {
         if(!CONFIG.ADMIN_NUMBER.equals(phonenumber)){
-            return ResponseData.failed(-1,"非管理员账号");
+            return ResponseData.failed(-1,"非管理员账号!");
         }
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.like("phonenumber", phonenumber).last("LiMIT 1");

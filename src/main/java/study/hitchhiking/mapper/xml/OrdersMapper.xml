@@ -5,6 +5,8 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="study.hitchhiking.pojo.Orders">
         <id column="orderID" property="orderID" />
+        <result column="userID" property="userID" />
+        <result column="role" property="role" />
         <result column="orderstatus" property="orderstatus" />
         <result column="orderprice" property="orderprice" />
         <result column="carID" property="carID" />
@@ -18,7 +20,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        orderID, orderstatus, orderprice, carID, getonposition, getontime, getoffposition, threshold, destination, departtime
+        orderID, userID, role, orderstatus, orderprice, carID, getonposition, getontime, getoffposition, threshold, destination, departtime
     </sql>
 
 </mapper>

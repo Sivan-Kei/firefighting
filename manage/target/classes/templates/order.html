@@ -31,6 +31,19 @@
                 <input type="text" name="orderID" th:value=${one.orderID} hidden></td>
         </tr>
         <tr>
+            <td>创建者ID：</td>
+            <td><input type="text" name="UserID" th:value=${one.UserID}></td>
+        </tr>
+        <tr>
+            <td>创建者身份：</td>
+            <td><span th:text=${one.role}></span>
+                <select name="role">
+                    <option value="不修改">不修改</option>
+                    <option value="司机">司机</option>
+                    <option value="乘客">乘客</option>
+                </select></td>
+        </tr>
+        <tr>
             <td>订单状态：</td>
             <td><span th:text=${one.orderstatus}></span>
                 <select name="orderstatus">

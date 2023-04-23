@@ -36,20 +36,6 @@
                 <input type="text" name="orderID" th:value=${one.orderID} hidden></td>
         </tr>
         <tr>
-            <td>创建者ID：</td>
-            <td><span th:text=${one.initiatorID}></span>
-                <input type="number" name="initiatorID" th:value=${one.initiatorID} hidden></td>
-        </tr>
-        <tr>
-            <td>身份：</td>
-            <td><span th:text=${one.role}></span>
-                <select name="role">
-                    <option value="不修改">不修改</option>
-                    <option value="乘客">乘客</option>
-                    <option value="司机">司机</option>
-                </select></td>
-        </tr>
-        <tr>
             <td>当前价格：</td>
             <td><input type="text" name="currentprice" th:value=${one.currentprice}></td>
         </tr>

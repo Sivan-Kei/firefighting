@@ -13,19 +13,22 @@
     <form th:action="@{/orders/select}" method="post">
         <p>
             <input type="text" name="target" placeholder="请输入查询条件"></input>
-            <input type="checkbox" name="orderstatus" value="议价中">议价中
-            <input type="checkbox" name="orderstatus" value="已接单">已接单
-            <input type="checkbox" name="orderstatus" value="行程中">行程中
-            <input type="checkbox" name="orderstatus" value="待付款">待付款
-            <input type="checkbox" name="orderstatus" value="已完成">已完成
+            <input type="radio" name="typeOfSelect" value="orderID" checked>订单ID
+            <input type="radio" name="typeOfSelect" value="carID">汽车ID
+            <input type="radio" name="typeOfSelect" value="getonposition">上车地点
+            <input type="radio" name="typeOfSelect" value="threshold">出发点
+
         </p>
         <p>
-            <span>
-                <input type="radio" name="typeOfSelect" value="orderID" checked>订单ID
-                <input type="radio" name="typeOfSelect" value="carID">汽车ID
-                <input type="radio" name="typeOfSelect" value="getonposition">上车地点
-                <input type="radio" name="typeOfSelect" value="threshold">出发点
-            </span>
+            <input type="radio" name="orderstatus" value="议价中">议价中
+            <input type="radio" name="orderstatus" value="已接单">已接单
+            <input type="radio" name="orderstatus" value="行程中">行程中
+            <input type="radio" name="orderstatus" value="待付款">待付款
+            <input type="radio" name="orderstatus" value="已完成">已完成
+        </p>
+        <p>
+            <input type="checkbox" name="role" value="司机">司机
+            <input type="checkbox" name="role" value="乘客">乘客
             <input type="submit" value="查询" class="btn-gradient blue mini">
             <input type="reset" value="重置" class="btn-gradient green mini">
         </p>
@@ -34,6 +37,8 @@
 <table class="niceTable">
     <tr>
         <th>订单ID</th>
+        <th>创建者</th>
+        <th>创建者身份</th>
         <th>订单状态</th>
         <th>订单价格</th>
         <th>汽车ID</th>
@@ -46,6 +51,13 @@
     <tr>
         <form th:action=@{/orders/insert} method="post">
             <td>自动生成</td>
+            <td><input type="text" name="UserID" placeholder="创建者ID" size="6"></td>
+            <td>
+                <select name="role">
+                    <option value="司机">司机</option>
+                    <option value="乘客">乘客</option>
+                </select>
+            </td>
             <td>
                 <select name="orderstatus">
                     <option value="议价中">议价中</option>
@@ -55,11 +67,11 @@
                     <option value="已完成">已完成</option>
                 </select>
             </td>
-            <td><input type="text" name="orderprice" placeholder="订单价格"></td>
-            <td><input type="text" name="carID" placeholder="汽车ID"></td>
-            <td><input type="text" name="getonposition" placeholder="上车点"></td>
+            <td><input type="text" name="orderprice" placeholder="订单价格" size="6"></td>
+            <td><input type="text" name="carID" placeholder="汽车ID" size="6"></td>
+            <td><input type="text" name="getonposition" placeholder="上车点" size="16"></td>
             <td><input type="datetime-local" name="getondate"></td>
-            <td><input type="text" name="threshold" placeholder="起点"></td>
+            <td><input type="text" name="threshold" placeholder="起点" size="16"></td>
             <td><input type="submit" value="添加"></td>
             <td></td>
         </form>
@@ -67,6 +79,8 @@
     <tr th:each="orderObj:${orderList}">
 
         <td th:text=${orderObj.orderID}>订单ID</td>
+        <td th:text=${orderObj.UserID}>创建者ID</td>
+        <td th:text=${orderObj.role}>创建者身份</td>
         <td th:text=${orderObj.orderstatus}>订单状态</td>
         <td th:text=${orderObj.orderprice}>订单价格</td>
         <td th:text=${orderObj.carID}>汽车ID</td>

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ch" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <link rel="stylesheet" href="css/card.css">
+</head>
+<body>
+<div th:each="orderObj:${orderList}">
+    <div class="card">
+        <span style="width:40%;float:left;">
+                <p class="card_title" th:text=${orderObj.FROM_TO}>北京-西安</p>
+                <p class="card_time" th:text=${orderObj.startTime}>12:30</p>
+                <p class="card_phone" th:text=${orderObj.phone}>12390098798</p>
+                <p class="card_name" th:text=${orderObj.initiatorName}>wujh</p>
+        </span>
+        <span  style="width:20%;float:left;" >
+            <p>
+                <a class="card_price" th:text=${orderObj.askForPrice}>12.0</a>
+                <a class="card_price">元</a>
+            </p>
+            <p>
+                <button class="card_button">议价</button>
+            </p>
+        </span>
+    </div>
+</div>
+</body>
+</html>

@@ -14,6 +14,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(new TokenInterceptor())
                 .excludePathPatterns("/login/**").order(11)
                 .excludePathPatterns("/login.html").order(12)
+                .addPathPatterns("/index.html")
                 .addPathPatterns("/user/**")
                 .addPathPatterns("/comment/**")
                 .addPathPatterns("/orders/**")

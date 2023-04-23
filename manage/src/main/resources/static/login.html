@@ -21,7 +21,7 @@
                     $.cookie('token', result.token);
                     top.location = "/index.html";
                 }else{
-                    alert("非管理员用户！");
+                    alert(result.msg);
                 }
             }
         })

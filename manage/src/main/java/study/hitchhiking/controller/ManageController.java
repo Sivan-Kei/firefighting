@@ -37,13 +37,8 @@ public class ManageController {
 
     @RequestMapping("/select")
     public String getManage(@RequestParam(name = "target", required = false) String target,
-                            @RequestParam(name = "typeOfSelect", required = false) String typeOfSelect,
-                            @RequestParam(name = "role", required = false) String[] role, Model model) {
+                            @RequestParam(name = "typeOfSelect", required = false) String typeOfSelect, Model model) {
         QueryWrapper<Manage> wrapper = new QueryWrapper<>();
-        //判断是否有查询条件
-        if (null != role && role.length == 1) {
-            wrapper.like("role", role[0]);
-        }
         if (null != target && null != typeOfSelect) {
             wrapper.like(typeOfSelect, target);
         }
@@ -56,16 +51,12 @@ public class ManageController {
     @RequestMapping("/insert")
     public String insertManage(@RequestParam(name = "orderID") String orderID,
                                 @RequestParam(name = "userID") String userID,
-                                @RequestParam(name = "role") String role,
-                                @RequestParam(name = "initiatorID") String initiatorID,
                                 @RequestParam(name = "currentprice") String currentprice,
                                 @RequestParam(name = "requestedprice") String requestedprice,
                                 Model model) {
         Manage manage = new Manage();
         manage.setUserID(Long.valueOf(userID));
         manage.setOrderID(Long.valueOf(orderID));
-        manage.setInitiatorID(Long.valueOf(initiatorID));
-        manage.setRole(role);
         try {
             manage.setCurrentprice(new BigDecimal(currentprice));
         } catch (Exception e) {
@@ -108,10 +99,8 @@ public class ManageController {
     }
 
     @RequestMapping("/update")
-    public String updateManage(@RequestParam(name = "initiatorID") String initiatorID,
-                               @RequestParam(name = "orderID") String orderID,
+    public String updateManage(@RequestParam(name = "orderID") String orderID,
                                @RequestParam(name = "userID") String userID,
-                               @RequestParam(name = "role") String role,
                                @RequestParam(name = "currentprice") String currentprice,
                                @RequestParam(name = "requestedprice") String requestedprice,
                                Model model) {
@@ -119,10 +108,6 @@ public class ManageController {
         manageQueryWrapper.eq("userID",userID);
         manageQueryWrapper.eq("orderID",orderID);
         Manage manage = manageService.getOne(manageQueryWrapper);
-        if(!"不修改".equals(role)){
-            manage.setRole(role);
-        }
-
         try {
             manage.setCurrentprice(new BigDecimal(currentprice));
         } catch (Exception e) {

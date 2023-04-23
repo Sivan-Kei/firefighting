@@ -1,0 +1,43 @@
+.card {
+  color: #fff;
+  background-color: #30BD8A;
+  line-height: 300px;
+  word-wrap: break-word;
+  border: 6px solid #4CD68E;
+  text-align: center;
+}
+.card span {
+  display: inline-block;
+  line-height: 40px;
+  width: 200px;
+  font-size: 30px;
+  vertical-align: middle;
+}
+.card_title{
+width: 50%;
+  padding: 5%;
+  border-radius: 5px;
+  background: rgba(240,230,220, .7);
+  box-shadow: 0 0 8px rgba(0, 0, 0, .7);
+
+}
+
+.card_time{
+
+}
+
+.card_phone{
+
+}
+
+.card_name{
+
+}
+
+.card_price{
+
+}
+
+.card_button{
+
+}

@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import study.hitchhiking.VO.orderVO;
+import study.hitchhiking.pojo.Manage;
 import study.hitchhiking.pojo.Orders;
 import study.hitchhiking.service.CommentService;
 import study.hitchhiking.service.ManageService;
@@ -42,12 +43,18 @@ public class OrdersController {
     @RequestMapping("/select")
     public String getOrders(@RequestParam(name = "target", required = false) String target,
                             @RequestParam(name = "typeOfSelect", required = false) String typeOfSelect,
-                            @RequestParam(name = "orderstatus", required = false) String[] status, Model model) {
+                            @RequestParam(name = "orderstatus", required = false) String[] status,
+                            @RequestParam(name = "role", required = false) String[] role, Model model) {
         QueryWrapper<Orders> wrapper = new QueryWrapper<>();
         //判断是否有查询条件
         if (null != status && status.length > 0) {
             for (int i = 0; i < status.length; i++) {
                 wrapper.like("orderstatus", status[i]);
+            }
+        }
+        if (null != role && role.length > 0) {
+            for (int i = 0; i < role.length; i++) {
+                wrapper.like("role", role[i]);
             }
         }
         if (null != target && null != typeOfSelect) {
@@ -67,6 +74,8 @@ public class OrdersController {
                               @DateTimeFormat(fallbackPatterns = {"yyyy-MM-dd'T'HH:mm"})
                               @RequestParam(name = "getondate") Date getondate,
                               @RequestParam(name = "threshold") String threshold,
+                              @RequestParam(name = "UserID") String UserID,
+                              @RequestParam(name = "role")String role,
                               Model model) {
         Orders order = new Orders();
         order.setOrderstatus(orderstatus);
@@ -79,23 +88,18 @@ public class OrdersController {
         order.setGetonposition(getonposition);
         order.setGetontime(getondate);
         order.setThreshold(threshold);
+        order.setUserID(Long.valueOf(UserID));
+        order.setRole(role);
         ordersService.save(order);
 
         model.addAttribute("orderList", orderVOList(ordersService.list(null)));
+
 //        addUserVOList("userList", userService.list(null), model);
         return "orderSelect";
     }
 
     @RequestMapping("/delete")
     public String deleteOrder(@RequestParam(name = "orderID") String orderID, Model model) {
-//        QueryWrapper<Comment> commentQueryWrapper = new QueryWrapper<>();
-//        commentQueryWrapper.eq("orderID",orderID);
-//        commentService.remove(commentQueryWrapper);
-//
-//        QueryWrapper<Manage> manageQueryWrapper = new QueryWrapper<>();
-//        manageQueryWrapper.eq("orderID",orderID);
-//        manageService.remove(manageQueryWrapper);
-
         ordersService.removeById(Long.valueOf(orderID));
         model.addAttribute("orderList",orderVOList(ordersService.list(null)));
         return "orderSelect";
@@ -120,6 +124,8 @@ public class OrdersController {
                               @RequestParam(name = "destination") String destination,
                               @DateTimeFormat(fallbackPatterns = {"yyyy-MM-dd'T'HH:mm"})
                               @RequestParam(name = "departtime",required = false) Date departtime,
+                              @RequestParam(name = "UserID") String UserID,
+                              @RequestParam(name = "role")String role,
                               Model model) {
         Orders order = ordersService.getById(orderID);
         if(!"不修改".equals(orderstatus)){
@@ -140,6 +146,10 @@ public class OrdersController {
         order.setThreshold(threshold);
         if(null != departtime){
             order.setDeparttime(departtime);
+        }
+        order.setUserID(Long.valueOf(UserID));
+        if(!"不修改".equals(role)){
+            order.setRole(role);
         }
         ordersService.updateById(order);
 

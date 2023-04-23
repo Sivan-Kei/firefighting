@@ -16,6 +16,10 @@ public class orderVO implements Serializable {
 
     private Long orderID;
 
+    private Long UserID;
+
+    private String role;
+
     private String orderstatus;
 
     private BigDecimal orderprice;
@@ -43,6 +47,8 @@ public class orderVO implements Serializable {
         this.getoffposition = order.getGetoffposition();
         this.threshold = order.getThreshold();
         this.destination = order.getDestination();
+        this.role = order.getRole();
+        this.UserID = order.getUserID();
         if(null != order.getDeparttime()){
             departtime = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(order.getDeparttime());
         }else{

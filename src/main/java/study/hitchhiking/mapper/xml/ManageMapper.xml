@@ -6,15 +6,13 @@
     <resultMap id="BaseResultMap" type="study.hitchhiking.pojo.Manage">
         <result column="userID" property="userID" />
         <result column="orderID" property="orderID" />
-        <result column="initiatorID" property="initiatorID" />
         <result column="currentprice" property="currentprice" />
         <result column="requestedprice" property="requestedprice" />
-        <result column="role" property="role" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        userID, orderID, initiatorID, currentprice, requestedprice, role
+        userID, orderID, currentprice, requestedprice
     </sql>
 
 </mapper>

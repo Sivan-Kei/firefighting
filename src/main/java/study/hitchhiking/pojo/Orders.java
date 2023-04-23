@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author 吴建豪
- * @since 2023-04-05
+ * @since 2023-04-23
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -28,6 +28,11 @@ public class Orders implements Serializable {
 
     @TableId(value = "orderID", type = IdType.AUTO)
     private Long orderID;
+
+    @TableField("userID")
+    private Long userID;
+
+    private String role;
 
     private String orderstatus;
 
@@ -47,4 +52,6 @@ public class Orders implements Serializable {
     private String destination;
 
     private Date departtime;
+
+
 }
