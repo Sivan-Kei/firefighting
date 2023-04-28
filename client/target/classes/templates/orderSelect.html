@@ -1,30 +1,72 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ch" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.bootcdn.net/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-    <link rel="stylesheet" href="css/card.css">
+    <title>Index</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="../static/css/index.css" th:href=@{/css/index.css}>
+    <link rel="stylesheet" href="../static/css/card.css" th:href=@{/css/card.css}>
+    <link rel="stylesheet" href="../static/css/select.css" th:href=@{/css/select.css}>
+    <script src="../static/js/jquery-3.1.1.min.js" th:src=@{/js/jquery-3.1.1.min.js}></script>
 </head>
-<body>
-<div th:each="orderObj:${orderList}">
-    <div class="card">
-        <span style="width:40%;float:left;">
-                <p class="card_title" th:text=${orderObj.FROM_TO}>北京-西安</p>
-                <p class="card_time" th:text=${orderObj.startTime}>12:30</p>
-                <p class="card_phone" th:text=${orderObj.phone}>12390098798</p>
-                <p class="card_name" th:text=${orderObj.initiatorName}>wujh</p>
-        </span>
-        <span  style="width:20%;float:left;" >
-            <p>
-                <a class="card_price" th:text=${orderObj.askForPrice}>12.0</a>
-                <a class="card_price">元</a>
-            </p>
-            <p>
-                <button class="card_button">议价</button>
-            </p>
-        </span>
+<body style="background:grayscale(5%);">
+<nav id="nav-1">
+    <a style="padding:0 6%;"></a>
+    <a class="link-1" th:href=@{/index/user}>主页</a>
+    <a class="link-1" th:href=@{/orders/all}>预定</a>
+    <a class="link-1" href="#">议价</a>
+    <a class="link-1" href="#">评论</a>
+    <a style="padding:0 6%;"></a>
+    <a class="link-3" href="#">登出</a>
+    <a class="link-3" href="/userCenter/details" th:text="${UserName}+' 个人中心'"></a>
+</nav>
+<div style="width:70%;margin:0 auto;background:white;margin-top: 5px;border-radius: 5px 5px 5px 5px;">
+
+    <form th:action=@{/orders/select} method="post">
+        <div align="center">
+            <input type="text" name="start" placeholder="起点" style="width:240px;height:45px;font-size:28px;">
+            <a type="text" style="font-size:28px;">——</a>
+            <input type="text" name="end" placeholder="终点" style="width:240px;height:45px;font-size:28px;">
+            <input type="submit" value="查找">
+        </div>
+        <div align="center">
+            <a type="text">最低价</a>
+            <input type="number" name="botPrice" id="botPrice" placeholder="最低价" value="0" style="width:70px;" oninput=NumLimit()>
+            <a type="text">—</a>
+            <a type="text">最高价</a>
+            <input type="number" name="topPrice" id="topPrice" placeholder="最高价" value="1000" style="width:70px;" oninput=NumLimit()>
+            <a type="text">需要座位</a>
+            <input type="number" name="seat" placeholder="需要座位数" value="1" style="width:70px;">
+        </div>
+        <div align="center">
+            <input type="radio" name="target" value="找乘客" checked>找乘客
+            <input type="radio" name="target" value="找司机">找司机
+        </div>
+    </form>
+
+    <div th:each="orderObj:${orderList}">
+        <div class="card">
+            <div style="width:65%;height:160px;float:left;">
+                    <p class="card_title" th:text=${orderObj.FROM_TO}>北京-西安</p>
+                    <p class="card_time" th:text=${orderObj.startTime}>12:30</p>
+                    <p class="card_phone" th:text=${orderObj.phone}>12390098798</p>
+                    <p class="card_name" th:text=${orderObj.initiatorName}>wujh</p>
+            </div>
+            <div  style="width:35%;height:160px;float:left;" >
+                <p>
+                    <a class="card_price" th:text=${orderObj.askForPrice}>12.0</a>
+                    <a class="card_price">元</a>
+                </p>
+                <p>
+                    <form  th:action=@{/manage/argue} method="post">
+                        <input type="text" name="orderID" th:value=${orderObj.orderID} hidden>
+                        <input type="number" name="price">
+                        <input type="submit" class="btn-gradient blue big" value="议价"></input>
+                    </form>
+                </p>
+            </div>
+        </div>
     </div>
 </div>
+<script src="../static/js/index.js" th:src=@{/js/index.js}></script>
 </body>
 </html>

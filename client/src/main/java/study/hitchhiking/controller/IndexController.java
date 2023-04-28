@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import study.hitchhiking.clientUtils.UserUtils;
 import study.hitchhiking.service.UserService;
 import study.hitchhiking.utils.JWTUtil;
 
@@ -18,9 +19,7 @@ public class IndexController {
 
     @RequestMapping("/user")
     public String toIndex(HttpServletRequest request, Model model){
-        String userID = getUserID(request);
-        model.addAttribute("UserID",userID);
-        model.addAttribute("UserName",userService.getById(userID).getName());
+        UserUtils.getUser(request,model,userService);
         return "CIndex";
     }
 

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import study.hitchhiking.VO.UserCenterVO;
+import study.hitchhiking.clientUtils.UserUtils;
 import study.hitchhiking.pojo.Car;
 import study.hitchhiking.pojo.User;
 import study.hitchhiking.service.*;
@@ -47,9 +48,8 @@ public class UserCenterController {
 
     @RequestMapping("/details")
     public String userCenter(HttpServletRequest request,Model model) {
-        String userID = getUserID(request);
-        User user = userService.getById(userID);
-        model.addAttribute("one", new UserCenterVO(user, carService));
+        User user = UserUtils.getUser(request,model,userService);
+        model.addAttribute("one", new UserCenterVO(user, carService,ordersService));
         return "userCenter";
     }
 
@@ -61,11 +61,7 @@ public class UserCenterController {
                              @RequestParam(name = "identification",required = false) String identification,
                              HttpServletRequest request,
                              Model model) {
-        String userID = getUserID(request);
-        QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.eq("userID", userID);
-
-        User user = userService.getOne(wrapper);
+        User user = UserUtils.getUser(request,model,userService);
         user.setName(name);
         if ("true".equals(sexChange)) {
             user.setSex("男".equals(user.getSex()) ? "女" : "男");
@@ -77,41 +73,15 @@ public class UserCenterController {
         userService.updateById(user);
 
 
-        model.addAttribute("one", new UserCenterVO(user, carService));
-
-        QueryWrapper<Car> carWrapper = new QueryWrapper<>();
-        carWrapper.eq("userID", userID);
-        model.addAttribute("cars", carService.list(carWrapper));
+        model.addAttribute("one", new UserCenterVO(user, carService,ordersService));
         return "updateUser";
     }
 
     @RequestMapping("/delete")
     public String deleteUser(@RequestParam(name = "userID") String userID, Model model) {
         userService.removeById(Long.valueOf(userID));
-        addUserVOList("userList", userService.list(null), model);
-        return "userSelect";
+        return "redirect:/CLogin.html";
     }
-
-    private void addUserVOList(String name, List<User> list, Model model) {
-        List<UserCenterVO> VOList = new ArrayList<>();
-        for (User user : list) {
-            VOList.add(new UserCenterVO(user, carService));
-        }
-        model.addAttribute(name, VOList);
-    }
-
-    private String getUserID(HttpServletRequest request){
-        String token = null;
-        Cookie[] cookies = request.getCookies();
-        for (int i = 0; i < cookies.length; i++) {
-            if("token".equals(cookies[i].getName())){
-                token = cookies[i].getValue();
-            }
-        }
-        String userID = JWTUtil.getUIDByToken(token);//解码
-        return userID;
-    }
-
 }
 
 

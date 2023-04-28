@@ -3,84 +3,131 @@
 <head>
     <title>userCenter</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="../static/css/index.css" th:href=@{/css/index.css}>
+    <link rel="stylesheet" href="../static/css/card.css" th:href=@{/css/card.css}>
+    <link rel="stylesheet" href="../static/css/select.css" th:href=@{/css/select.css}>
     <script src="../static/js/jquery-3.1.1.min.js" th:src=@{/js/jquery-3.1.1.min.js}></script>
+    <script src="../static/js/login.js" th:src=@{/js/login.js}></script>
 </head>
-<body>
-<table>
-    <tr>
-        <td>姓名：</td>
-        <td><span th:text=${one.name}></span></td>
-    </tr>
-    <tr>
-        <td>性别：</td>
-        <td><span th:text=${one.sex}></span></td>
-    </tr>
-    <tr>
-        <td>电话：</td>
-        <td><span th:text=${one.phonenumber}></span></td>
-    </tr>
-    <tr>
-        <td>密码：</td>
-        <td><span th:text=${one.password}></span></td>
-    </tr>
-    <tr>
-        <td>身份证号：</td>
-        <td><span th:text=${one.identification}></span></td>
-    </tr>
-    <tr>
-        <td>创建时间：</td>
-        <td><span th:text=${one.createtime}></span></td>
-    </tr>
-    <tr>
-        <td>持有车数量：</td>
-        <td><span th:text=${one.getCarNumber()}></span></td>
-    </tr>
-</table>
-<form th:action=@{/user/details}>
-    <input type="text" name="userID" th:value=${one.userID} hidden>
-    <input type="text" name="change" value="change" hidden>
-    <input type="submit" value="修改个人信息" class="btn-gradient blue mini">
-</form>
-<table class="niceTable">
-    <tr>
-        <th>车辆ID</th>
-        <th>车座数</th>
-        <th>车牌号</th>
-        <th>百公里成本</th>
-        <th>动力类型</th>
-        <th>操作</th>
-        <th>操作</th>
-    </tr>
-    <tr>
-        <form th:action=@{/car/insert} method="post">
-            <td>自动生成<input type="text" name="userID" th:value=${one.userID} hidden></td>
-            <td><input type="number" name="seatnumber" placeholder="客座数"  required></td>
-            <td><input type="text" name="platenumber" placeholder="车牌号"  required></td>
-            <td><input type="text" name="fuelconsumption" placeholder="百公里成本"  required></td>
-            <td><input type="text" name="oiltype" placeholder="动力类型"  required></td>
-            <td><input type="submit" value="添加车辆"></td>
-            <td><input type="reset" value="清除信息"></td>
-        </form>
-    </tr>
-    <tr th:each="car:${one.car}">
-        <td th:text=${car.carID}></td>
-        <td th:text=${car.seatnumber}></td>
-        <td th:text=${car.platenumber}></td>
-        <td th:text=${car.fuelconsumption}></td>
-        <td th:text=${car.oiltype}></td>
-        <td>
-            <form th:action=@{/car/details}>
-                <input type="text" name="carID" th:value=${car.carID} hidden>
-                <input type="submit" value="修改信息" class="btn-gradient blue mini">
+<body style="background:grayscale(5%);">
+<nav id="nav-1">
+    <a style="padding:0 6%;"></a>
+    <a class="link-1" th:href=@{/index/user}>主页</a>
+    <a class="link-1" th:href=@{/orders/all}>预定</a>
+    <a class="link-1" href="#">议价</a>
+    <a class="link-1" href="#">评论</a>
+    <a style="padding:0 6%;"></a>
+    <a class="link-3" onclick=logout()>登出</a>
+    <a class="link-3" href="/userCenter/details" th:text="${UserName}+' 个人中心'"></a>
+</nav>
+<div style="width:80%;margin:0 auto;background:white;margin-top: 5px;border-radius: 5px 5px 5px 5px;">
+    <table>
+        <tr>
+            <td>姓名：</td>
+            <td><span th:text=${one.name}></span></td>
+        </tr>
+        <tr>
+            <td>性别：</td>
+            <td><span th:text=${one.sex}></span></td>
+        </tr>
+        <tr>
+            <td>电话：</td>
+            <td><span th:text=${one.phonenumber}></span></td>
+        </tr>
+        <tr>
+            <td>密码：</td>
+            <td><span th:text=${one.password}></span></td>
+        </tr>
+        <tr>
+            <td>身份证号：</td>
+            <td><span th:text=${one.identification}></span></td>
+        </tr>
+        <tr>
+            <td>创建时间：</td>
+            <td><span th:text=${one.createtime}></span></td>
+        </tr>
+        <tr>
+            <td>持有车数量：</td>
+            <td><span th:text=${one.getCarNumber()}></span></td>
+        </tr>
+    </table>
+    <form th:action=@{/userCenter/details}>
+        <input type="text" name="userID" th:value=${one.userID} hidden>
+        <input type="text" name="change" value="change" hidden>
+        <input type="submit" value="修改个人信息" class="btn-gradient blue mini">
+    </form>
+    <table class="niceTable">
+        <tr>
+            <th>车辆ID</th>
+            <th>车座数</th>
+            <th>车牌号</th>
+            <th>百公里成本</th>
+            <th>动力类型</th>
+            <th>操作</th>
+            <th>操作</th>
+        </tr>
+        <tr>
+            <form th:action=@{/car/insert} method="post">
+                <td>自动生成<input type="text" name="userID" th:value=${one.userID} hidden></td>
+                <td><input type="number" name="seatnumber" placeholder="客座数"  required></td>
+                <td><input type="text" name="platenumber" placeholder="车牌号"  required></td>
+                <td><input type="text" name="fuelconsumption" placeholder="百公里成本"  required></td>
+                <td><input type="text" name="oiltype" placeholder="动力类型"  required></td>
+                <td><input type="submit" value="添加车辆"></td>
+                <td><input type="reset" value="清除信息"></td>
             </form>
-        </td>
-        <td>
-            <form th:action=@{/car/delete}>
-                <input type="text" name="carID" th:value=${car.carID} hidden>
-                <input type="submit" value="删除" class="btn-gradient green mini">
-            </form>
-        </td>
-    </tr>
-</table>
+        </tr>
+        <tr th:each="car:${one.car}">
+            <td th:text=${car.carID}></td>
+            <td th:text=${car.seatnumber}></td>
+            <td th:text=${car.platenumber}></td>
+            <td th:text=${car.fuelconsumption}></td>
+            <td th:text=${car.oiltype}></td>
+            <td>
+                <form th:action=@{/car/details}>
+                    <input type="text" name="carID" th:value=${car.carID} hidden>
+                    <input type="submit" value="修改信息" class="btn-gradient blue mini">
+                </form>
+            </td>
+            <td>
+                <form th:action=@{/car/delete}>
+                    <input type="text" name="carID" th:value=${car.carID} hidden>
+                    <input type="submit" value="删除" class="btn-gradient green mini">
+                </form>
+            </td>
+        </tr>
+    </table>
+
+    <div th:each="orderObj:${one.orders}">
+        <h3 class="card" style="height:26px;">历史订单</h3>
+        <div class="card">
+            <div style="width:65%;height:160px;float:left;">
+                <p class="card_title" th:text=${orderObj.FROM_TO}>北京-西安</p>
+                <p class="card_time" th:text=${orderObj.startTime}>12:30</p>
+                <p class="card_phone" th:text=${orderObj.phone}>12390098798</p>
+                <p class="card_name" th:text=${orderObj.initiatorName}>wujh</p>
+            </div>
+            <div  style="width:35%;height:160px;float:left;" >
+                <p>
+                    <a class="card_price" th:text=${orderObj.askForPrice}>12.0</a>
+                    <a class="card_price">元</a>
+                </p>
+                <p>
+                <form  th:action=@{/manage/detail} method="post">
+                    <input type="text" name="orderID" th:value=${orderObj.orderID} hidden>
+                    <input type="submit" class="btn-gradient red small" value="详情"></input>
+                </form>
+                <form  th:action=@{/comment/insert} method="post">
+                    <input type="text" name="orderID" th:value=${orderObj.orderID} hidden>
+                    <input type="text" name="comment" placeholder="评论内容">
+                    <input type="submit" class="btn-gradient red mini" value="评论"></input>
+                </form>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="../static/js/index.js" th:src=@{/js/index.js}></script>
 </body>
 </html>

@@ -53,7 +53,7 @@ public class OrderVO implements Serializable {
     private String seat;
 
 
-    public OrderVO(Orders order, UserService userService,CarService carService) {
+    public OrderVO(Orders order, UserService userService, CarService carService) {
         this.orderID = order.getOrderID();
         this.orderstatus = order.getOrderstatus();
         this.orderprice = order.getOrderprice();
@@ -77,20 +77,61 @@ public class OrderVO implements Serializable {
 
         initiatorID = order.getUserID().toString();
         initiatorRole = order.getRole();
-        askForPrice = String.format("%.2f",order.getOrderprice());
-        if("乘客".equals(initiatorRole)){
-            FROM_TO = order.getGetonposition()+" —— "+order.getGetoffposition();
+        askForPrice = String.format("%.2f", order.getOrderprice());
+        if ("乘客".equals(initiatorRole)) {
+            FROM_TO = order.getGetonposition() + " —— " + order.getGetoffposition();
             startTime = dateFormat.format(order.getGetontime());
-        }else if("司机".equals(initiatorRole)){
-            FROM_TO = order.getThreshold()+" —— "+order.getDestination();
+            seat = " ";
+        } else if ("司机".equals(initiatorRole)) {
+            FROM_TO = order.getThreshold() + " —— " + order.getDestination();
             startTime = dateFormat.format(order.getDeparttime());
 
             QueryWrapper<Car> carQueryWrapper = new QueryWrapper<>();
-            carQueryWrapper.eq("carID",order.getCarID());
-            seat = carService.getOne(carQueryWrapper).getSeatnumber().toString();
+            carQueryWrapper.eq("carID", order.getCarID());
+            seat = "座位数：" + carService.getOne(carQueryWrapper).getSeatnumber().toString();
         }
-        userQueryWrapper.eq("userID",order.getUserID());
+        userQueryWrapper.eq("userID", order.getUserID());
         User user = userService.getOne(userQueryWrapper);
+        phone = user.getPhonenumber();
+        initiatorName = user.getName();
+    }
+
+    public OrderVO(Orders order, User user, CarService carService) {
+        this.orderID = order.getOrderID();
+        this.orderstatus = order.getOrderstatus();
+        this.orderprice = order.getOrderprice();
+        this.carID = order.getCarID();
+        this.getonposition = order.getGetonposition();
+        this.getoffposition = order.getGetoffposition();
+        this.threshold = order.getThreshold();
+        this.destination = order.getDestination();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
+        if (null != order.getDeparttime()) {
+            departtime = dateFormat.format(order.getDeparttime());
+        } else {
+            departtime = DEFAULT_DATE;
+        }
+        if (null != order.getGetontime()) {
+            getontime = dateFormat.format(order.getGetontime());
+        } else {
+            getontime = DEFAULT_DATE;
+        }
+
+        initiatorID = user.getUserID().toString();
+        initiatorRole = order.getRole();
+        askForPrice = String.format("%.2f", order.getOrderprice());
+        if ("乘客".equals(initiatorRole)) {
+            FROM_TO = order.getGetonposition() + " —— " + order.getGetoffposition();
+            startTime = dateFormat.format(order.getGetontime());
+            seat = " ";
+        } else if ("司机".equals(initiatorRole)) {
+            FROM_TO = order.getThreshold() + " —— " + order.getDestination();
+            startTime = dateFormat.format(order.getDeparttime());
+
+            QueryWrapper<Car> carQueryWrapper = new QueryWrapper<>();
+            carQueryWrapper.eq("carID", order.getCarID());
+            seat = "座位数：" + carService.getOne(carQueryWrapper).getSeatnumber().toString();
+        }
         phone = user.getPhonenumber();
         initiatorName = user.getName();
     }

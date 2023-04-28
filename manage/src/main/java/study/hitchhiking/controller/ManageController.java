@@ -71,7 +71,6 @@ public class ManageController {
         manageService.save(manage);
 
         model.addAttribute("manageList", manageService.list(null));
-//        addUserVOList("userList", userService.list(null), model);
         return "manageSelect";
     }
 

@@ -4,14 +4,17 @@ package study.hitchhiking.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import study.hitchhiking.VO.OrderVO;
+import study.hitchhiking.clientUtils.UserUtils;
 import study.hitchhiking.pojo.Orders;
 import study.hitchhiking.service.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,29 +44,41 @@ public class OrdersController {
     @Autowired
     private CarService carService;
 
+    @RequestMapping("/all")
+    public String getALl(HttpServletRequest request, Model model){
+        model.addAttribute("orderList", orderVOList(ordersService.list(null)));
+        UserUtils.getUser(request,model,userService);
+        return "orderSelect";
+    }
+
+
     @RequestMapping("/select")
-    public String getOrders(@RequestParam(name = "target", required = false) String target,
-                            @RequestParam(name = "typeOfSelect", required = false) String typeOfSelect,
-                            @RequestParam(name = "orderstatus", required = false) String[] status,
-                            @RequestParam(name = "role", required = false) String[] role, Model model) {
+    public String getOrders(@RequestParam(name = "start", required = false) String start,
+                            @RequestParam(name = "end", required = false) String end,
+                            @RequestParam(name = "topPrice", required = false) int topPrice,
+                            @RequestParam(name = "botPrice", required = false) int botPrice,
+                            @RequestParam(name = "seat", required = false) int seat,
+                            @RequestParam(name = "target", required = false) String target,
+                            HttpServletRequest request, Model model) {
+        UserUtils.getUser(request,model,userService);
         QueryWrapper<Orders> wrapper = new QueryWrapper<>();
-        //判断是否有查询条件
-        if (null != status && status.length > 0) {
-            for (int i = 0; i < status.length; i++) {
-                wrapper.like("orderstatus", status[i]);
+        wrapper.between("orderprice",botPrice,topPrice);
+        List<Orders> targetList = new ArrayList<>();
+        if("找司机".equals(target)){
+            wrapper.like("threshold",start);
+            wrapper.like("destination",end);
+            List<Orders> orderList = ordersService.list(wrapper);
+            for (Orders orders : orderList) {
+                if(carService.getById(orders.getCarID()).getCarID()>=seat){
+                    targetList.add(orders);
+                }
             }
+        }else if("找乘客".equals(target)){
+            wrapper.like("getonposition",start);
+            wrapper.like("getoffposition",end);
+            targetList = ordersService.list(wrapper);
         }
-        if (null != role && role.length > 0) {
-            for (int i = 0; i < role.length; i++) {
-                wrapper.like("role", role[i]);
-            }
-        }
-        if (null != target && null != typeOfSelect) {
-            wrapper.like(typeOfSelect, target);
-        }
-        //没有查询条件则查找全部，有条件则按照条件查询
-        List<Orders> orderList = ordersService.list(wrapper);
-        model.addAttribute("orderList", orderVOList(orderList));
+        model.addAttribute("orderList", orderVOList(targetList));
         return "orderSelect";
     }
 
@@ -77,7 +92,9 @@ public class OrdersController {
                               @RequestParam(name = "threshold") String threshold,
                               @RequestParam(name = "UserID") String UserID,
                               @RequestParam(name = "role")String role,
+                              HttpServletRequest request,
                               Model model) {
+        UserUtils.getUser(request,model,userService);
         Orders order = new Orders();
         order.setOrderstatus(orderstatus);
         try {
@@ -94,20 +111,22 @@ public class OrdersController {
         ordersService.save(order);
 
         model.addAttribute("orderList", orderVOList(ordersService.list(null)));
-
-//        addUserVOList("userList", userService.list(null), model);
         return "orderSelect";
     }
 
     @RequestMapping("/delete")
-    public String deleteOrder(@RequestParam(name = "orderID") String orderID, Model model) {
+    public String deleteOrder(@RequestParam(name = "orderID") String orderID,
+                              HttpServletRequest request, Model model) {
+        UserUtils.getUser(request,model,userService);
         ordersService.removeById(Long.valueOf(orderID));
         model.addAttribute("orderList",orderVOList(ordersService.list(null)));
         return "orderSelect";
     }
 
     @RequestMapping("/details")
-    public String getDetails(@RequestParam(name = "orderID") String orderID, Model model) {
+    public String getDetails(@RequestParam(name = "orderID") String orderID,
+                             HttpServletRequest request, Model model) {
+        UserUtils.getUser(request,model,userService);
         model.addAttribute("one",new OrderVO(ordersService.getById(orderID),userService,carService));
         return "order";
     }
@@ -127,7 +146,9 @@ public class OrdersController {
                               @RequestParam(name = "departtime",required = false) Date departtime,
                               @RequestParam(name = "UserID") String UserID,
                               @RequestParam(name = "role")String role,
+                              HttpServletRequest request,
                               Model model) {
+        UserUtils.getUser(request,model,userService);
         Orders order = ordersService.getById(orderID);
         if(!"不修改".equals(orderstatus)){
             order.setOrderstatus(orderstatus);

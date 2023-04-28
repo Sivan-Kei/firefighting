@@ -11,6 +11,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONObject;
+import study.hitchhiking.config.StartConfig;
 import study.hitchhiking.utils.JWTUtil;
 import study.hitchhiking.utils.response.ResponseData;
 
@@ -42,6 +43,7 @@ public class TokenInterceptor implements HandlerInterceptor{
         }
 
         response.setCharacterEncoding("utf-8");
+        //获取cookie中保存的token
         String token = null;
         Cookie[] cookies = request.getCookies();
         for (int i = 0; i < cookies.length; i++) {
@@ -49,22 +51,19 @@ public class TokenInterceptor implements HandlerInterceptor{
                 token = cookies[i].getValue();
             }
         }
-        System.out.println("preHandle....." + token);
-        ResponseData responseData;
 
-        //token存在
+        ResponseData responseData;
+        //token存在，验证token
         if(null != token) {
             String userID = JWTUtil.getUIDByToken(token);//解码
             if(null != userID){
-                responseData = ResponseData.success();
-                //responseMessage(response, response.getWriter(), responseData);
+                responseData = ResponseData.success();//验证成功
                 return true;
             }
         }
-
+        //验证失败
         responseData = ResponseData.failed("无有效登录信息，请重新登录。");
-        //responseMessage(response, response.getWriter(), responseData);
-        response.sendRedirect("/login.html");
+        response.sendRedirect(StartConfig.SERVER);
         return false;
     }
 
