@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ch" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>manageSelect</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="../static/css/index.css" th:href=@{/css/index.css}>
+    <script src="../static/js/jquery-3.1.1.min.js" th:src=@{/js/jquery-3.1.1.min.js}></script>
+    <script src="../static/js/login.js" th:src=@{/js/login.js}></script>
+    <link href="/css/select.css" media="all" rel="stylesheet"/>
+    <script>
+        function checkNum(obj) {
+            //检查是否是非数字值
+            if (isNaN(obj.value)) {
+                obj.value = "";
+            }
+            if (obj != null) {
+                //检查小数点后是否对于两位
+                if (obj.value.toString().split(".").length > 1 && obj.value.toString().split(".")[1].length > 2) {
+                    alert("小数点后多于两位！");
+                    obj.value = "";
+                }
+            }
+        };
+
+
+    </script>
+</head>
+<body>
+<nav id="nav-1">
+    <a style="padding:0 6%;"></a>
+    <a class="link-1" th:href=@{/index/user}>主页</a>
+    <a class="link-1" th:href=@{/orders/all}>预定</a>
+    <a class="link-1" th:href=@{/manage/select}>议价</a>
+    <a class="link-1" th:href=@{/comment/select}>评论</a>
+    <a style="padding:0 6%;"></a>
+    <a class="link-3" onclick=logout()>登出</a>
+    <a class="link-3" href="/userCenter/details" th:text="${UserName}+' 个人中心'"></a>
+</nav>
+<div style="width:80%;margin:0 auto;background:white;margin-top: 5px;border-radius: 5px 5px 5px 5px;">
+    <div style="float:left;width:50%;">
+    <h3>议价请求</h3>
+    <table class="niceTable">
+        <tr>
+            <th>用户ID</th>
+            <th>订单ID</th>
+            <th>当前价格</th>
+            <th>请求价格</th>
+            <th>操作</th>
+            <th>操作</th>
+        </tr>
+<!--        <tr>-->
+<!--            <form th:action=@{/manage/insert} method="post">-->
+<!--                <td><input type="text" name="userID" placeholder="用户ID"></td>-->
+<!--                <td><input type="text" name="orderID" placeholder="订单ID"></td>-->
+<!--                <td><input type="text" name="currentprice" onkeyup=checkNum(this)></td>-->
+<!--                <td><input type="text" name="requestedprice" onkeyup=checkNum(this)></td>-->
+<!--                <td><input type="submit" value="添加" class="btn-gradient blue mini"></td>-->
+<!--                <td><input type="reset" value="重置" class="btn-gradient green mini"></td>-->
+<!--            </form>-->
+<!--        </tr>-->
+        <tr th:each="manageObj:${manageList}">
+
+            <td th:text=${manageObj.userID}>用户ID</td>
+            <td th:text=${manageObj.orderID}>订单ID</td>
+            <td th:text=${manageObj.currentprice}>当前价格</td>
+            <td th:text=${manageObj.requestedprice}>请求价格</td>
+            <td>
+                <form th:action="@{/manage/details}" method="post">
+                    <input type="hidden" name="orderID" th:value=${manageObj.orderID}>
+                    <input type="hidden" name="userID" th:value=${manageObj.userID}>
+                    <input type="submit" value="详情" class="btn-gradient blue mini">
+                </form>
+            </td>
+            <td>
+                <form th:action="@{/manage/delete}" method="post">
+                    <input type="hidden" name="orderID" th:value=${manageObj.orderID}>
+                    <input type="hidden" name="userID" th:value=${manageObj.userID}>
+                    <input type="submit" value="删除" class="btn-gradient red mini">
+                </form>
+            </td>
+        </tr>
+    </table>
+    </div>
+
+    <div style="float:left;width:50%;">
+    <h3>收到议价</h3>
+    <table class="niceTable">
+        <tr>
+            <th>用户ID</th>
+            <th>订单ID</th>
+            <th>当前价格</th>
+            <th>请求价格</th>
+            <th>操作</th>
+            <th>操作</th>
+        </tr>
+<!--        <tr>-->
+<!--            <form th:action=@{/manage/insert} method="post">-->
+<!--                <td><input type="text" name="userID" placeholder="用户ID"></td>-->
+<!--                <td><input type="text" name="orderID" placeholder="订单ID"></td>-->
+<!--                <td><input type="text" name="currentprice" onkeyup=checkNum(this)></td>-->
+<!--                <td><input type="text" name="requestedprice" onkeyup=checkNum(this)></td>-->
+<!--                <td><input type="submit" value="添加" class="btn-gradient blue mini"></td>-->
+<!--                <td><input type="reset" value="重置" class="btn-gradient green mini"></td>-->
+<!--            </form>-->
+<!--        </tr>-->
+        <tr th:each="manageObj:${managedList}">
+
+            <td th:text=${manageObj.userID}>用户ID</td>
+            <td th:text=${manageObj.orderID}>订单ID</td>
+            <td th:text=${manageObj.currentprice}>当前价格</td>
+            <td th:text=${manageObj.requestedprice}>请求价格</td>
+            <td>
+                <form th:action="@{/manage/details}" method="post">
+                    <input type="hidden" name="orderID" th:value=${manageObj.orderID}>
+                    <input type="hidden" name="userID" th:value=${manageObj.userID}>
+                    <input type="submit" value="详情" class="btn-gradient blue mini">
+                </form>
+            </td>
+            <td>
+                <form th:action="@{/manage/agree}" method="post">
+                    <input type="hidden" name="orderID" th:value=${manageObj.orderID}>
+                    <input type="hidden" name="userID" th:value=${manageObj.userID}>
+                    <input type="submit" value="接受议价" class="btn-gradient red mini">
+                </form>
+            </td>
+        </tr>
+    </table>
+    </div>
+</div>
+</body>
+</html>

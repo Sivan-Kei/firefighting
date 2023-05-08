@@ -14,8 +14,8 @@
     <a style="padding:0 6%;"></a>
     <a class="link-1" th:href=@{/index/user}>主页</a>
     <a class="link-1" th:href=@{/orders/all}>预定</a>
-    <a class="link-1" href="#">议价</a>
-    <a class="link-1" href="#">评论</a>
+    <a class="link-1" th:href=@{/manage/select}>议价</a>
+    <a class="link-1" th:href=@{/comment/select}>评论</a>
     <a style="padding:0 6%;"></a>
     <a class="link-3" onclick=logout()>登出</a>
     <a class="link-3" href="/userCenter/details" th:text="${UserName}+' 个人中心'"></a>
@@ -26,25 +26,26 @@
         <table>
             <tr>
                 <td>姓名：</td>
-                <td><input type="text" name="name" th:value=${one.name}  required></td>
+                <td><input type="text" name="name" th:value=${one.name} required></td>
             </tr>
             <tr>
                 <td>性别：</td>
                 <td><span th:text=${one.sex}></span>———是否修改
                     <input type="radio" name="sexChange" value="true">是
-                    <input type="radio" name="sexChange" value="false" checked>否</td>
+                    <input type="radio" name="sexChange" value="false" checked>否
+                </td>
             </tr>
             <tr>
                 <td>电话：</td>
-                <td><input type="text" name="phonenumber" th:value=${one.phonenumber}  required></input></td>
+                <td><input type="text" name="phonenumber" th:value=${one.phonenumber} required></input></td>
             </tr>
             <tr>
                 <td>密码：</td>
-                <td><input type="text" name="password"  th:value=${one.password}  required></span></td>
+                <td><input type="text" name="password" th:value=${one.password} required></span></td>
             </tr>
             <tr>
                 <td>身份证号：</td>
-                <td><input type="text" name="identification"  th:value=${one.identification}></span></td>
+                <td><input type="text" name="identification" th:value=${one.identification}></span></td>
             </tr>
             <tr>
                 <td>

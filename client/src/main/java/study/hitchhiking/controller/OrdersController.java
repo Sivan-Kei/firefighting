@@ -10,8 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import study.hitchhiking.VO.OrderVO;
+import study.hitchhiking.VO.UserCenterVO;
 import study.hitchhiking.clientUtils.UserUtils;
-import study.hitchhiking.pojo.Orders;
+import study.hitchhiking.pojo.*;
 import study.hitchhiking.service.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,9 +47,18 @@ public class OrdersController {
 
     @RequestMapping("/all")
     public String getALl(HttpServletRequest request, Model model){
-        model.addAttribute("orderList", orderVOList(ordersService.list(null)));
+        QueryWrapper<Orders> ordersQueryWrapper = new QueryWrapper<>();
+        ordersQueryWrapper.eq("orderstatus","议价中");
+        model.addAttribute("orderList", orderVOList(ordersService.list(ordersQueryWrapper)));
         UserUtils.getUser(request,model,userService);
         return "orderSelect";
+    }
+
+    @RequestMapping("/create")
+    public String create(HttpServletRequest request, Model model){
+        User user = UserUtils.getUser(request,model,userService);
+        model.addAttribute("one",new UserCenterVO(user,carService,ordersService));
+        return "createOrder";
     }
 
 
@@ -64,16 +74,19 @@ public class OrdersController {
         QueryWrapper<Orders> wrapper = new QueryWrapper<>();
         wrapper.between("orderprice",botPrice,topPrice);
         List<Orders> targetList = new ArrayList<>();
+        wrapper.eq("orderstatus","议价中");
         if("找司机".equals(target)){
+            wrapper.eq("role","司机");
             wrapper.like("threshold",start);
             wrapper.like("destination",end);
             List<Orders> orderList = ordersService.list(wrapper);
             for (Orders orders : orderList) {
-                if(carService.getById(orders.getCarID()).getCarID()>=seat){
+                if(carService.getById(orders.getCarID()).getSeatnumber() >= seat){
                     targetList.add(orders);
                 }
             }
         }else if("找乘客".equals(target)){
+            wrapper.eq("role","乘客");
             wrapper.like("getonposition",start);
             wrapper.like("getoffposition",end);
             targetList = ordersService.list(wrapper);
@@ -83,35 +96,41 @@ public class OrdersController {
     }
 
     @RequestMapping("/insert")
-    public String insertOrder(@RequestParam(name = "orderstatus") String orderstatus,
-                              @RequestParam(name = "orderprice") String orderprice,
+    public String insertOrder(@RequestParam(name = "orderprice") String orderprice,
                               @RequestParam(name = "carID") String carID,
-                              @RequestParam(name = "getonposition") String getonposition,
                               @DateTimeFormat(fallbackPatterns = {"yyyy-MM-dd'T'HH:mm"})
-                              @RequestParam(name = "getondate") Date getondate,
+                              @RequestParam(name = "departtime") Date departtime,
+
                               @RequestParam(name = "threshold") String threshold,
-                              @RequestParam(name = "UserID") String UserID,
+                              @RequestParam(name = "destination") String destination,
                               @RequestParam(name = "role")String role,
                               HttpServletRequest request,
                               Model model) {
-        UserUtils.getUser(request,model,userService);
+        User user = UserUtils.getUser(request,model,userService);
         Orders order = new Orders();
-        order.setOrderstatus(orderstatus);
+        order.setOrderstatus("议价中");
+        order.setRole(role);
+        order.setUserID(user.getUserID());
+
         try {
             order.setOrderprice(new BigDecimal(orderprice));
         } catch (Exception e) {
             order.setOrderprice(new BigDecimal(0));
         }
-        order.setCarID(carID);
-        order.setGetonposition(getonposition);
-        order.setGetontime(getondate);
-        order.setThreshold(threshold);
-        order.setUserID(Long.valueOf(UserID));
-        order.setRole(role);
+        if("司机".equals(role)){
+            order.setCarID(carID);
+            order.setDestination(destination);
+            order.setThreshold(threshold);
+            order.setDeparttime(departtime);
+        }else{
+            order.setGetoffposition(destination);
+            order.setGetonposition(threshold);
+            order.setGetontime(departtime);
+        }
         ordersService.save(order);
 
         model.addAttribute("orderList", orderVOList(ordersService.list(null)));
-        return "orderSelect";
+        return "redirect:/index/user";
     }
 
     @RequestMapping("/delete")
@@ -129,6 +148,18 @@ public class OrdersController {
         UserUtils.getUser(request,model,userService);
         model.addAttribute("one",new OrderVO(ordersService.getById(orderID),userService,carService));
         return "order";
+    }
+
+    @RequestMapping("/over")
+    public String over(@RequestParam(name = "orderID") String orderID,
+                             HttpServletRequest request, Model model) {
+        UserUtils.getUser(request,model,userService);
+        QueryWrapper<Orders> wrapper = new QueryWrapper<>();
+        wrapper.eq("orderID",orderID);
+        Orders orders = ordersService.getById(orderID);
+        orders.setOrderstatus("已完成");
+        ordersService.updateById(orders);
+        return "redirect:/userCenter/details";
     }
 
     @RequestMapping("/update")

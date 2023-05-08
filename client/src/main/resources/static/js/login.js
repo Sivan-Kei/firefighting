@@ -18,7 +18,7 @@ function logout() {
     }
     //返回登录页面或者主页
     window.location.href = "/CLogin.html";
-}
+};
 
 function NumLimit() {
     var topPrice = $("#topPrice").val();

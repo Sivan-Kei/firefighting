@@ -33,6 +33,7 @@ public class UserCenterVO implements Serializable {
 
     private List<Car> car;
 
+    private List<OrderVO> pastOrders;
     private List<OrderVO> orders;
 
     private static final String DEFAULT_DATE = "0000-00-00 00:00:00";
@@ -69,10 +70,20 @@ public class UserCenterVO implements Serializable {
 
         QueryWrapper<Orders> ordersQueryWrapper = new QueryWrapper<>();
         ordersQueryWrapper.eq("userID",userID);
+        ordersQueryWrapper.ne("orderstatus","已完成");
         List<Orders> ordersList = ordersService.list(ordersQueryWrapper);
         orders = new ArrayList<>();
         for (Orders order : ordersList) {
             orders.add(new OrderVO(order,user,carService));
+        }
+
+        ordersQueryWrapper = new QueryWrapper<>();
+        ordersQueryWrapper.eq("userID",userID);
+        ordersQueryWrapper.eq("orderstatus","已完成");
+        List<Orders> pastOrdersList = ordersService.list(ordersQueryWrapper);
+        pastOrders = new ArrayList<>();
+        for (Orders order : pastOrdersList) {
+            pastOrders.add(new OrderVO(order,user,carService));
         }
     }
 

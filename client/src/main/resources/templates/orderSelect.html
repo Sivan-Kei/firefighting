@@ -13,10 +13,10 @@
     <a style="padding:0 6%;"></a>
     <a class="link-1" th:href=@{/index/user}>主页</a>
     <a class="link-1" th:href=@{/orders/all}>预定</a>
-    <a class="link-1" href="#">议价</a>
-    <a class="link-1" href="#">评论</a>
+    <a class="link-1" th:href=@{/manage/select}>议价</a>
+    <a class="link-1" th:href=@{/comment/select}>评论</a>
     <a style="padding:0 6%;"></a>
-    <a class="link-3" href="#">登出</a>
+    <a class="link-3" onclick=logout()>登出</a>
     <a class="link-3" href="/userCenter/details" th:text="${UserName}+' 个人中心'"></a>
 </nav>
 <div style="width:70%;margin:0 auto;background:white;margin-top: 5px;border-radius: 5px 5px 5px 5px;">
@@ -30,38 +30,40 @@
         </div>
         <div align="center">
             <a type="text">最低价</a>
-            <input type="number" name="botPrice" id="botPrice" placeholder="最低价" value="0" style="width:70px;" oninput=NumLimit()>
+            <input type="number" name="botPrice" id="botPrice" placeholder="最低价" value="0" style="width:70px;"
+                   oninput=NumLimit()>
             <a type="text">—</a>
             <a type="text">最高价</a>
-            <input type="number" name="topPrice" id="topPrice" placeholder="最高价" value="1000" style="width:70px;" oninput=NumLimit()>
+            <input type="number" name="topPrice" id="topPrice" placeholder="最高价" value="1000" style="width:70px;"
+                   oninput=NumLimit()>
             <a type="text">需要座位</a>
             <input type="number" name="seat" placeholder="需要座位数" value="1" style="width:70px;">
         </div>
         <div align="center">
-            <input type="radio" name="target" value="找乘客" checked>找乘客
-            <input type="radio" name="target" value="找司机">找司机
+            <input type="radio" name="target" value="找乘客" checked>找司机
+            <input type="radio" name="target" value="找司机">找乘客
         </div>
     </form>
 
     <div th:each="orderObj:${orderList}">
         <div class="card">
             <div style="width:65%;height:160px;float:left;">
-                    <p class="card_title" th:text=${orderObj.FROM_TO}>北京-西安</p>
-                    <p class="card_time" th:text=${orderObj.startTime}>12:30</p>
-                    <p class="card_phone" th:text=${orderObj.phone}>12390098798</p>
-                    <p class="card_name" th:text=${orderObj.initiatorName}>wujh</p>
+                <p class="card_title" th:text=${orderObj.FROM_TO}>北京-西安</p>
+                <p class="card_time" th:text=${orderObj.startTime}>12:30</p>
+                <p class="card_phone" th:text=${orderObj.phone}>12390098798</p>
+                <p class="card_name" th:text=${orderObj.initiatorName}>wujh</p>
             </div>
-            <div  style="width:35%;height:160px;float:left;" >
+            <div style="width:35%;height:160px;float:left;">
                 <p>
                     <a class="card_price" th:text=${orderObj.askForPrice}>12.0</a>
                     <a class="card_price">元</a>
                 </p>
                 <p>
-                    <form  th:action=@{/manage/argue} method="post">
-                        <input type="text" name="orderID" th:value=${orderObj.orderID} hidden>
-                        <input type="number" name="price">
-                        <input type="submit" class="btn-gradient blue big" value="议价"></input>
-                    </form>
+                <form th:action=@{/manage/argue} method="post">
+                    <input type="text" name="orderID" th:value=${orderObj.orderID} hidden>
+                    <input type="number" name="price">
+                    <input type="submit" class="btn-gradient blue big" value="议价"></input>
+                </form>
                 </p>
             </div>
         </div>

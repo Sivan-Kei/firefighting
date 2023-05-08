@@ -22,7 +22,7 @@ import java.util.List;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author 吴建豪
@@ -47,21 +47,20 @@ public class UserCenterController {
     private ManageService manageService;
 
     @RequestMapping("/details")
-    public String userCenter(HttpServletRequest request,Model model) {
-        User user = UserUtils.getUser(request,model,userService);
-        model.addAttribute("one", new UserCenterVO(user, carService,ordersService));
+    public String userCenter(HttpServletRequest request, Model model) {
+        User user = UserUtils.getUser(request, model, userService);
+        model.addAttribute("one", new UserCenterVO(user, carService, ordersService));
         return "userCenter";
     }
 
     @RequestMapping("/update")
-    public String updateUser(@RequestParam(name = "name",required = false) String name,
-                             @RequestParam(name = "sexChange",required = false) String sexChange,
-                             @RequestParam(name = "phonenumber",required = false) String phonenumber,
-                             @RequestParam(name = "password",required = false) String password,
-                             @RequestParam(name = "identification",required = false) String identification,
-                             HttpServletRequest request,
-                             Model model) {
-        User user = UserUtils.getUser(request,model,userService);
+    public String updateUser(@RequestParam(name = "name", required = false) String name,
+                             @RequestParam(name = "sexChange", required = false) String sexChange,
+                             @RequestParam(name = "phonenumber", required = false) String phonenumber,
+                             @RequestParam(name = "password", required = false) String password,
+                             @RequestParam(name = "identification", required = false) String identification,
+                             HttpServletRequest request, Model model) {
+        User user = UserUtils.getUser(request, model, userService);
         user.setName(name);
         if ("true".equals(sexChange)) {
             user.setSex("男".equals(user.getSex()) ? "女" : "男");
@@ -72,8 +71,7 @@ public class UserCenterController {
 
         userService.updateById(user);
 
-
-        model.addAttribute("one", new UserCenterVO(user, carService,ordersService));
+        model.addAttribute("one", new UserCenterVO(user, carService, ordersService));
         return "updateUser";
     }
 
