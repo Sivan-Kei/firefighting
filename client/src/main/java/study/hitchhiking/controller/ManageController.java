@@ -102,12 +102,24 @@ public class ManageController {
         wrapper = new QueryWrapper<>();
         wrapper.eq("orderID",orderID);
         manageService.remove(wrapper);
+        manageService.save(manage);
 
         Orders orders = ordersService.getById(orderID);
         orders.setOrderstatus("行程中");
         orders.setOrderprice(manage.getRequestedprice());
         ordersService.save(orders);
 
+        return "redirect:/manage/select";
+    }
+
+    @RequestMapping("/delete")
+    public String deleteManage(@RequestParam(name = "userID") String userID,
+                               @RequestParam(name = "orderID") String orderID,
+                               Model model) {
+        QueryWrapper<Manage> manageQueryWrapper = new QueryWrapper<>();
+        manageQueryWrapper.eq("userID",userID);
+        manageQueryWrapper.eq("orderID",orderID);
+        manageService.remove(manageQueryWrapper);
         return "redirect:/manage/select";
     }
 }
