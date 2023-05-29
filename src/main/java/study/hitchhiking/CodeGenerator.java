@@ -33,10 +33,6 @@ public class CodeGenerator {
         throw new MybatisPlusException("请输入正确的" + tip + "！");
     }
 
-
-
-
-
     public static void main(String[] args) {
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
@@ -47,7 +43,7 @@ public class CodeGenerator {
         gc.setOutputDir(projectPath + "/src/main/java");//设置代码生成路径
         gc.setFileOverride(true);//是否覆盖以前文件
         gc.setOpen(false);//是否打开生成目录
-        gc.setAuthor("吴建豪");//设置项目作者名称
+        gc.setAuthor("ksw");//设置项目作者名称
         gc.setIdType(IdType.AUTO);//设置主键策略
         gc.setBaseResultMap(true);//生成基本ResultMap
         gc.setBaseColumnList(true);//生成基本ColumnList
@@ -57,7 +53,7 @@ public class CodeGenerator {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://localhost:3306/HitchHikingDB?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8");
+        dsc.setUrl("jdbc:mysql://localhost:3306/firefighting?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
         dsc.setPassword("root");
@@ -65,7 +61,7 @@ public class CodeGenerator {
 
         // 包配置
         PackageConfig pc = new PackageConfig();
-        pc.setParent("study.hitchhiking");
+        pc.setParent("study.fire_fighting");
         pc.setMapper("mapper");
         pc.setXml("mapper.xml");
         pc.setEntity("pojo");
