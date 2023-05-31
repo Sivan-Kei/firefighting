@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import study.fire_fighting.AutoApplication;
+import study.fire_fighting.pojo.User;
 import study.fire_fighting.service.UserService;
 import study.fire_fighting.utils.response.ResponseData;
 
@@ -31,4 +32,12 @@ public class UserControllerTest {
         Assert.assertEquals(0,((ArrayList)res.get("userList")).size());
     }
 
+    @Test
+    public void should_save_user_success(){
+        ResponseData res = new ResponseData();
+        User user = new User();
+        user.setUid(8l);
+        boolean saveSuccess = userService.save(user);
+        Assert.assertTrue(saveSuccess);
+    }
 }
