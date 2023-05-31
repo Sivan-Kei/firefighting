@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author ksw
- * @since 2023-05-29
+ * @since 2023-05-31
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -23,7 +23,7 @@ public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "uid", type = IdType.INPUT)
+    @TableId(value = "uid", type = IdType.AUTO)
     private Long uid;
 
     private String upassword;

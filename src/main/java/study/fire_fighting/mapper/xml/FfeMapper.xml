@@ -8,11 +8,12 @@
         <result column="ename" property="ename" />
         <result column="price" property="price" />
         <result column="manufactor" property="manufactor" />
+        <result column="useway" property="useway" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        eid, ename, price, manufactor
+        eid, ename, price, manufactor, useway
     </sql>
 
 </mapper>

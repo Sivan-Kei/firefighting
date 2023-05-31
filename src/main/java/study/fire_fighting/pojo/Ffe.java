@@ -5,9 +5,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.Version;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -18,7 +15,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author ksw
- * @since 2023-05-29
+ * @since 2023-05-31
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -37,5 +34,6 @@ public class Ffe implements Serializable {
     private String manufactor;
 
     private String useway;
+
 
 }

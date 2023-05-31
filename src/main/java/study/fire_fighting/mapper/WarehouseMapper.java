@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author ksw
- * @since 2023-05-29
+ * @since 2023-05-31
  */
 public interface WarehouseMapper extends BaseMapper<Warehouse> {
 
